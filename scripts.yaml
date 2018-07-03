@@ -1,0 +1,306 @@
+
+#  kitchen_lamp_timer:
+#    alias: "Kitchen Lamp Timer"
+#    sequence:
+#      - delay: '00:00:{{ states.input_slider.kitchen_lamp_run_time.state | int }}'
+#      - service: homeassistant.turn_off
+#        data:
+#          entity_id: switch.kitchen_lamp
+  
+  hot_water_pump_timer:
+    alias: "Hot Water Pump Timer"
+    sequence:
+      - delay: '00:15:00'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.hot_water
+
+  flash_kitchen_lamp_on:
+    alias: "Flash Kitchen Lamp On"
+    sequence:
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+
+  flash_kitchen_lamp_off:
+    alias: "Flash Kitchen Lamp Off"
+    sequence:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.kitchen_lamp
+      - delay: '00:00:01'
+
+#  all_lamps_off:
+#    alias: "Turn off all lamps"
+#    sequence:
+#      -  service homeassistant.turn_off
+#         data:
+#           - entity_id: group.lights
+
+  hot_water_on:
+    alias: "Hot Water On"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "siI0AB8JCx0MHB8KHwkLHR8JHwkLHQwdHwkfCgsdDB0fCR8JCx0LHQsdCx0fCgsdHwoLHQsAASsAAAAA"
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "siI0AB8JCx0MHB8KHwkLHR8JHwkLHQwdHwkfCgsdDB0fCR8JCx0LHQsdCx0fCgsdHwoLHQsAASsAAAAA"
+
+  garage_door_open:
+    alias: "Garage Door Open"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "sgCuAqQUEwcHEwcTFAYUBxMHFAYUBgcTBxQTBxQGBxMHFBMHEwcTBwcUBhQTBxQGBxMHExQHEwcGFAYUBxMHExQHEwcTBwYUBxMHEwcUBxMHExQHBhMHFBQGBxMUBwYTFQYGFBQGBxMHFAYUFAYHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAcTBwYUBxMUBhQGBxQGFBQGFAYUBgcUBxMUBhQGBxMHFBMHFAYHEwYUBxQGFBMHEwcUBgcUBhQGFAcUBhQGFBMHBhQGFBQHBhQTBwYUFAYHFBMGBxQGFAcTFAYHFAYUBhQHE6QUEwcGFAYUFAcTBxMHEwcUBgcTBxMUBxMHBxMHFBMHEwcTBwYUBxMUBhQHBhQGFBQGFAcGFAYUBhQHExQHEwcUBgcTBhUGFAYTBxQGFBQGBxQGFBMHBxMUBgcTFAcGFBMHBxMHEwcUEwcGFAcUBhMHFKQTEwcGFQYUEwcUBhQGFAYUBwYUBhQUBxMHBhQGFBMHFAYUBwYUBhQTBxMHBxQGFBMHFAYGFAcUBhQGFBMHFAcTBwYUBhQGFAcTBxQGFBMHBxMGFBQHBhQTBwYUEwcGFBQHBhQGFAYUEwgGFAYUBhQGFaMUEwcGFAYUFAYUBxMHEwcUBgcTBxQTBxMHBhQHExQHEwcTBwYUBhQUBxMHBhQGFBQGFAcGFAYUBhQHFBMHEwcTBwYUBhQHFAYUBhQHExQGBhQHFBMHBhQTBwcTFAcGFBMHBhQHEwcUEwcGFAYUBxQGFKMUFAYHEwcUEwcTBxQGFAYUBgcUBhQTBxQGBxQGFBMHEwcTCAYUBhQTBxMHBxMHFBMHEwcGFAcTBxQGFBMHEwcUBgcUBhQGFAcTBxQGExQHBhQGFBQGBxQTBwYUEwcHExQGBxQGFAYUEwcGFQYUBhQGAAXcFAYHEwcUEwcTBw=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "sgCuAqQUEwcHEwcTFAYUBxMHFAYUBgcTBxQTBxQGBxMHFBMHEwcTBwcUBhQTBxQGBxMHExQHEwcGFAYUBxMHExQHEwcTBwYUBxMHEwcUBxMHExQHBhMHFBQGBxMUBwYTFQYGFBQGBxMHFAYUFAYHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAcTBwYUBxMUBhQGBxQGFBQGFAYUBgcUBxMUBhQGBxMHFBMHFAYHEwYUBxQGFBMHEwcUBgcUBhQGFAcUBhQGFBMHBhQGFBQHBhQTBwYUFAYHFBMGBxQGFAcTFAYHFAYUBhQHE6QUEwcGFAYUFAcTBxMHEwcUBgcTBxMUBxMHBxMHFBMHEwcTBwYUBxMUBhQHBhQGFBQGFAcGFAYUBhQHExQHEwcUBgcTBhUGFAYTBxQGFBQGBxQGFBMHBxMUBgcTFAcGFBMHBxMHEwcUEwcGFAcUBhMHFKQTEwcGFQYUEwcUBhQGFAYUBwYUBhQUBxMHBhQGFBMHFAYUBwYUBhQTBxMHBxQGFBMHFAYGFAcUBhQGFBMHFAcTBwYUBhQGFAcTBxQGFBMHBxMGFBQHBhQTBwYUEwcGFBQHBhQGFAYUEwgGFAYUBhQGFaMUEwcGFAYUFAYUBxMHEwcUBgcTBxQTBxMHBhQHExQHEwcTBwYUBhQUBxMHBhQGFBQGFAcGFAYUBhQHFBMHEwcTBwYUBhQHFAYUBhQHExQGBhQHFBMHBhQTBwcTFAcGFBMHBhQHEwcUEwcGFAYUBxQGFKMUFAYHEwcUEwcTBxQGFAYUBgcUBhQTBxQGBxQGFBMHEwcTCAYUBhQTBxMHBxMHFBMHEwcGFAcTBxQGFBMHEwcUBgcUBhQGFAcTBxQGExQHBhQGFBQGBxQTBwYUEwcHExQGBxQGFAYUEwcGFQYUBhQGAAXcFAYHEwcUEwcTBw=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "sgCuAqQUEwcHEwcTFAYUBxMHFAYUBgcTBxQTBxQGBxMHFBMHEwcTBwcUBhQTBxQGBxMHExQHEwcGFAYUBxMHExQHEwcTBwYUBxMHEwcUBxMHExQHBhMHFBQGBxMUBwYTFQYGFBQGBxMHFAYUFAYHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAcTBwYUBxMUBhQGBxQGFBQGFAYUBgcUBxMUBhQGBxMHFBMHFAYHEwYUBxQGFBMHEwcUBgcUBhQGFAcUBhQGFBMHBhQGFBQHBhQTBwYUFAYHFBMGBxQGFAcTFAYHFAYUBhQHE6QUEwcGFAYUFAcTBxMHEwcUBgcTBxMUBxMHBxMHFBMHEwcTBwYUBxMUBhQHBhQGFBQGFAcGFAYUBhQHExQHEwcUBgcTBhUGFAYTBxQGFBQGBxQGFBMHBxMUBgcTFAcGFBMHBxMHEwcUEwcGFAcUBhMHFKQTEwcGFQYUEwcUBhQGFAYUBwYUBhQUBxMHBhQGFBMHFAYUBwYUBhQTBxMHBxQGFBMHFAYGFAcUBhQGFBMHFAcTBwYUBhQGFAcTBxQGFBMHBxMGFBQHBhQTBwYUEwcGFBQHBhQGFAYUEwgGFAYUBhQGFaMUEwcGFAYUFAYUBxMHEwcUBgcTBxQTBxMHBhQHExQHEwcTBwYUBhQUBxMHBhQGFBQGFAcGFAYUBhQHFBMHEwcTBwYUBhQHFAYUBhQHExQGBhQHFBMHBhQTBwcTFAcGFBMHBhQHEwcUEwcGFAYUBxQGFKMUFAYHEwcUEwcTBxQGFAYUBgcUBhQTBxQGBxQGFBMHEwcTCAYUBhQTBxMHBxMHFBMHEwcGFAcTBxQGFBMHEwcUBgcUBhQGFAcTBxQGExQHBhQGFBQGBxQTBwYUEwcHExQGBxQGFAYUEwcGFQYUBhQGAAXcFAYHEwcUEwcTBw=="
+  garage_door_close:
+    alias: "Garage Door Close"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "sgCuAqQTFAYHFAYUFAYUBhQGFAYUBwcTBxMUBhQHBxMHExQGFAYVBQgTBhQUBhQGBxMHFBQGFAYHEwcUBhQHExQGFAYUBgcUBxMHEwcTBxMVBQgTBhQHExQGBxQUBgcTFAYUBxMGCBMHEwcTFAYHEwcUBxMHE6QTFAcHEwcTFAYUBhQHFAYUBgcTBxQTBxQGBxMHExQGFAYUBwcTBxMUBxMGBxQHExQGFAYHEwcUBxMHExQGFAYUBwcTBxMHEwcTBxMUBwcTBxMHFBMHBxMUBgcTFAYUBhQHBhQHEwcTFAcGFAcTBxMHE6QUFAYHEwcTFAYUBxMHFAYUBgcTBxQUBhQGBxMHExQHFAYUBgcTBxMUBxQGBxMHExQHEwYHFAYUBxMHFBMHFAYUBgcTBxMHEwcUBxMUBgcTBxQHExQGBxMUBgcTFAcUBhQGBxMHFAcTEwcHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAYUBgcUBxMUBhQGBxQGExUGFAYUBgcTBxQUBhQGBxMHExQHFAYHEwcTBxMHFBQGFAYUBgcTBxQGFAcTBhQUBgcTBxMHFBQGBxMUBgcUFAYUBhQHBhQGFAYUFAYHEwcTBxQGFKQTFAYHEwcUFAYUBhQHEwYUBwYUBhQUBhQGBxQGFBQGFAYUBgcUBhQTBxQGBxMHFBMHFAYHEwcTBxMHFBQGFAYUBgcTBxQHEwYUBxMUBgcTBxQHExQGBxQTBgcUFAYUBhQGBxQGFAcTFAYHEwcUBxIIE6QTFAYHFAYUFAYUBhQGFAcUBgcTBxMUBhQHBxMHExQGFAYUBgcUBhQUBhQGBxMHFBQGFAYHEwcTBxQGFBQGFAYUBgcUBhQGFAcTBxMUBwYUBxMHExQHBhQTBwcTFAYUBhQHBhQHEwcTFAYHFAYUBhQHAAXcFAcGFAYUFAYUBg=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "sgCuAqQTFAYHFAYUFAYUBhQGFAYUBwcTBxMUBhQHBxMHExQGFAYVBQgTBhQUBhQGBxMHFBQGFAYHEwcUBhQHExQGFAYUBgcUBxMHEwcTBxMVBQgTBhQHExQGBxQUBgcTFAYUBxMGCBMHEwcTFAYHEwcUBxMHE6QTFAcHEwcTFAYUBhQHFAYUBgcTBxQTBxQGBxMHExQGFAYUBwcTBxMUBxMGBxQHExQGFAYHEwcUBxMHExQGFAYUBwcTBxMHEwcTBxMUBwcTBxMHFBMHBxMUBgcTFAYUBhQHBhQHEwcTFAcGFAcTBxMHE6QUFAYHEwcTFAYUBxMHFAYUBgcTBxQUBhQGBxMHExQHFAYUBgcTBxMUBxQGBxMHExQHEwYHFAYUBxMHFBMHFAYUBgcTBxMHEwcUBxMUBgcTBxQHExQGBxMUBgcTFAcUBhQGBxMHFAcTEwcHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAYUBgcUBxMUBhQGBxQGExUGFAYUBgcTBxQUBhQGBxMHExQHFAYHEwcTBxMHFBQGFAYUBgcTBxQGFAcTBhQUBgcTBxMHFBQGBxMUBgcUFAYUBhQHBhQGFAYUFAYHEwcTBxQGFKQTFAYHEwcUFAYUBhQHEwYUBwYUBhQUBhQGBxQGFBQGFAYUBgcUBhQTBxQGBxMHFBMHFAYHEwcTBxMHFBQGFAYUBgcTBxQHEwYUBxMUBgcTBxQHExQGBxQTBgcUFAYUBhQGBxQGFAcTFAYHEwcUBxIIE6QTFAYHFAYUFAYUBhQGFAcUBgcTBxMUBhQHBxMHExQGFAYUBgcUBhQUBhQGBxMHFBQGFAYHEwcTBxQGFBQGFAYUBgcUBhQGFAcTBxMUBwYUBxMHExQHBhQTBwcTFAYUBhQHBhQHEwcTFAYHFAYUBhQHAAXcFAcGFAYUFAYUBg=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "sgCuAqQTFAYHFAYUFAYUBhQGFAYUBwcTBxMUBhQHBxMHExQGFAYVBQgTBhQUBhQGBxMHFBQGFAYHEwcUBhQHExQGFAYUBgcUBxMHEwcTBxMVBQgTBhQHExQGBxQUBgcTFAYUBxMGCBMHEwcTFAYHEwcUBxMHE6QTFAcHEwcTFAYUBhQHFAYUBgcTBxQTBxQGBxMHExQGFAYUBwcTBxMUBxMGBxQHExQGFAYHEwcUBxMHExQGFAYUBwcTBxMHEwcTBxMUBwcTBxMHFBMHBxMUBgcTFAYUBhQHBhQHEwcTFAcGFAcTBxMHE6QUFAYHEwcTFAYUBxMHFAYUBgcTBxQUBhQGBxMHExQHFAYUBgcTBxMUBxQGBxMHExQHEwYHFAYUBxMHFBMHFAYUBgcTBxMHEwcUBxMUBgcTBxQHExQGBxMUBgcTFAcUBhQGBxMHFAcTEwcHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAYUBgcUBxMUBhQGBxQGExUGFAYUBgcTBxQUBhQGBxMHExQHFAYHEwcTBxMHFBQGFAYUBgcTBxQGFAcTBhQUBgcTBxMHFBQGBxMUBgcUFAYUBhQHBhQGFAYUFAYHEwcTBxQGFKQTFAYHEwcUFAYUBhQHEwYUBwYUBhQUBhQGBxQGFBQGFAYUBgcUBhQTBxQGBxMHFBMHFAYHEwcTBxMHFBQGFAYUBgcTBxQHEwYUBxMUBgcTBxQHExQGBxQTBgcUFAYUBhQGBxQGFAcTFAYHEwcUBxIIE6QTFAYHFAYUFAYUBhQGFAcUBgcTBxMUBhQHBxMHExQGFAYUBgcUBhQUBhQGBxMHFBQGFAYHEwcTBxQGFBQGFAYUBgcUBhQGFAcTBxMUBwYUBxMHExQHBhQTBwcTFAYUBhQHBhQHEwcTFAYHFAYUBhQHAAXcFAcGFAYUFAYUBg=="
+
+
+  living_room_tv_on:
+    alias: "Turn On Livng Room TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJ5QSExITETgSExITEhMRFBETEjgSOBETEjgSOBE4EjkQORETEhMSExE4EhMSExITERQROBI4ETgSExI4ETgSOBE4EgAFJQABKEoSAA0FAAAAAAAAAAA=="
+            - "JgAwAFQgDRANEAwgDR4cDw4PDRANEA0PGiAaEA0QDCANDxsfDg8NEA0PDg8ODw0PDQANBQAAAAAAAAAA=="
+      - delay: '00:00:10'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+      - delay: '00:00:03'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+      - delay: '00:00:02'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJpYPFg8VEDoQFQ8WDxUQFRAVEDoPOhAVEDoPOhA6DzoQOhAVDxYPOhAVEBUPFg86EBUQOBE6EBUQORA6EzcPFg86EAAFKAABJU0PAA0FAAAAAAAAAAA=="
+      - delay: '00:00:02'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJpUQFRAVEDoPFg8VEBUQFQ8WDzoQOg8WDzkROg86EDoPOw85EToPFRA6DzsPFRA6DxYPFg8VEDoPFg8VEDoQFQ86EAAFJwABJkwQAA0FAAAAAAAAAAA=="
+            - "JgAwAFQgDRANEAwgDR4cDw4PDRANEA0PGiAaEA0QDCANDxsfDg8NEA0PDg8ODw0PDQANBQAAAAAAAAAA=="
+
+  living_room_tv_off:
+    alias: "Turn Off TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJ5QSExITETgSExITEhMRFBETEjgSOBETEjgSOBE4EjkQORETEhMSExE4EhMSExITERQROBI4ETgSExI4ETgSOBE4EgAFJQABKEoSAA0FAAAAAAAAAAA=="
+            - "JgAwAFQhDBEMEA0fDh4bDw4PDg8NEA0QGh8aEQwQDR8ODw0QDQ8ODw4PGhEMHw4PDAANBQAAAAAAAAAA=="
+      - delay: '00:00:01'
+
+  living_room_chromecast:
+    alias: "Turn On ChromeCast Living Room TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJpYPFg8VEDoQFQ8WDxUQFRAVEDoPOhAVEDoPOhA6DzoQOhAVDxYPOhAVEBUPFg86EBUQOBE6EBUQORA6EzcPFg86EAAFKAABJU0PAA0FAAAAAAAAAAA=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJpUQFRAVEDoPFg8VEBUQFQ8WDzoQOg8WDzkROg86EDoPOw85EToPFRA6DzsPFRA6DxYPFg8VEDoPFg8VEDoQFQ86EAAFJwABJkwQAA0FAAAAAAAAAAA=="
+
+  living_room_sky:
+    alias: "Turn On Sky Living Room TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+            - "JgBIAAABJZYQFQ8WDzoRFBAVDxYPFg8VEDoPOw8VEDoPOw86EDoPOhA6DzoQFRA6DxYPFg8VEBUQFQ8WDzoQFRA6DzoQOg87DwANBQ=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJpYPFg8VEDoQFQ8WDxUQFRAVEDoPOhAVEDoPOhA6DzoQOhAVDxYPOhAVEBUPFg86EBUQOBE6EBUQORA6EzcPFg86EAAFKAABJU0PAA0FAAAAAAAAAAA=="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_101
+        data:
+          packet:
+            - "JgBQAAABJpUQFRAVEDoPFg8VEBUQFQ8WDzoQOg8WDzkROg86EDoPOw85EToPFRA6DzsPFRA6DxYPFg8VEDoPFg8VEDoQFQ86EAAFJwABJkwQAA0FAAAAAAAAAAA=="
+            - "JgAwAFQgDRANEAwgDR4cDw4PDRANEA0PGiAaEA0QDCANDxsfDg8NEA0PDg8ODw0PDQANBQAAAAAAAAAA=="
+
+#  living_room_tv_on_2:
+#    alias: "Turn ON Living Room TV"
+#    sequence:
+#      - service: switch.broadlink_send_packet_192_168_1_101
+#        data:
+#          packet:
+#            - "JgAwAFQgDRANEAwgDR4cDw4PDRANEA0PGiAaEA0QDCANDxsfDg8NEA0PDg8ODw0PDQANBQAAAAAAAAAA=="
+#            - "JgAwAFQgDRANEAwgDR4cDw4PDRANEA0PGiAaEA0QDCANDxsfDg8NEA0PDg8ODw0PDQANBQAAAAAAAAAA=="
+
+###############
+### SNUG TV ###
+###############
+
+  snug_tv_on:
+    alias: "Turn On Snug TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBYAAABJ5YRExITEjgSExITExIRFBEUFDUROREUETkROBE5ETkTNhITEhMSExE5ERQRFBEUERMSOBE5ETkRExQ2ETkRORE4EQAFKwABJ0wRAAxfAAEnSxEADQU==="
+            - "JgAwAFQhDBEMEA0fDh4bDw4PDg8NEA0QGh8aEQwQDR8ODw0QDQ8ODw4PGhEMHw4PDAANBQAAAAAAAAAA=="
+      - delay: '00:00:01'
+
+  snug_tv_off:
+    alias: "Turn Off Snug TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBYAAABJ5YRExITEjgSExITExIRFBEUFDUROREUETkROBE5ETkTNhITEhMSExE5ERQRFBEUERMSOBE5ETkRExQ2ETkRORE4EQAFKwABJ0wRAAxfAAEnSxEADQU==="
+            - "JgAwAFQhDBEMEA0fDh4bDw4PDg8NEA0QGh8aEQwQDR8ODw0QDQ8ODw4PGhEMHw4PDAANBQAAAAAAAAAA=="
+      - delay: '00:00:01'
+
+  snug_tv_chromecast:
+    alias: "Turn On ChromeCast Snug TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBQAAABJ5URFBITETkRFBMSExESExITFDUSOREUETgSOBE5ETgSOBE5ETkRFBE4ERQRFBEUExITEhMSETgRFBE5ETkROBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBQAAABJ5YRFBEUETgRFBEUERQRFBEUETgSOBEUETkRORE4ETkSOBI3EhMSExEUERQRFBE5ERQRFBE4ETkRORE5ETgRFBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+            - "JgBQAAABJ5YRFBEUETgRFBEUERQRFBEUETgSOBEUETkRORE4ETkSOBI3EhMSExEUERQRFBE5ERQRFBE4ETkRORE5ETgRFBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+            - "JgBQAAABJ5YRFBEUETgRFBEUERQRFBEUETgSOBEUETkRORE4ETkSOBI3EhMSExEUERQRFBE5ERQRFBE4ETkRORE5ETgRFBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+            - "JgBQAAABJ5YRFBEUETgRFBEUERQRFBEUETgSOBEUETkRORE4ETkSOBI3EhMSExEUERQRFBE5ERQRFBE4ETkRORE5ETgRFBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBYAAABJ5YRFBEUETgRFBEUERQRFBEUETkROBEUETkSOBM2ETkROREUERQROBEUERQRFBE5ERQROBE5EhMRORE4EjgRFBE5EQAFKwABJ0sSAAxfAAEnSxEADQU="
+
+  snug_tv_sky:
+    alias: "Turn On Sky Snug TV"
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBQAAABJ5URFBITETkRFBMSExESExITFDUSOREUETgSOBE5ETgSOBE5ETkRFBE4ERQRFBEUExITEhMSETgRFBE5ETkROBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBQAAABJ5YRFBEUETgRFBEUERQRFBEUETgSOBEUETkRORE4ETkSOBI3EhMSExEUERQRFBE5ERQRFBE4ETkRORE5ETgRFBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+            - "JgBQAAABJ5YRFBEUETgRFBEUERQRFBEUETgSOBEUETkRORE4ETkSOBI3EhMSExEUERQRFBE5ERQRFBE4ETkRORE5ETgRFBE5EQAFKwABJ0sSAA0FAAAAAAAAAAA="
+      - delay: '00:00:01'
+      - service: switch.broadlink_send_packet_192_168_1_100
+        data:
+          packet:
+            - "JgBYAAABJ5YRFBEUETgRFBEUERQRFBEUETkROBEUETkSOBM2ETkROREUERQROBEUERQRFBE5ERQROBE5EhMRORE4EjgRFBE5EQAFKwABJ0sSAAxfAAEnSxEADQU="
+
+###############
+### Vacuum ###
+###############
+
+  roborock_on:
+    alias: "Roborock On"
+    sequence:
+      - service: vacuum.start_pause
+
+  roborock_off:
+    alias: "Roborock Off"
+    sequence:
+      - service: vacuum.return_to_base

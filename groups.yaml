@@ -1,0 +1,68 @@
+
+simple:
+  name: Simple
+  view: yes
+  entities:
+    - group.badges
+    - group.lights
+    - group.switches
+    - group.TV
+    - group.TV_Snug
+    - group.Cleaning
+    - media_player.living_room_tv
+    - media_player.snug_tv
+
+#badges:
+#  name: Badges
+#  view: no
+#  entities:
+#    - sun.sun
+#    - sensor.yr_symbol
+#    - device_tracker.mr_scorpio
+#    - device_tracker.bcfb
+
+lights:
+  name: Lights
+  entities:
+    - switch.kitchen_lamp
+    - switch.porch_lamp
+    - switch.snug_lamp
+    - switch.living_room_lamp
+
+lights2:
+  name: Lights2
+  entities:
+    - switch.kitchen_lamp
+    - switch.snug_lamp
+    - switch.living_room_lamp
+switches:
+  name: Switches
+  control: hidden
+  entities:
+    - switch.hot_water
+    - switch.electric_blanket_brenda
+    - switch.garage_door
+    - switch.roborock
+
+TV:
+  name: Living Room TV
+  control: hidden
+  entities:
+    - switch.tv_on_off
+    - switch.mute
+    - script.living_room_chromecast
+    - script.living_room_sky
+
+TV_Snug:
+  name: Snug TV
+  control: hidden
+  entities:
+    - switch.snug_tv_on_off
+    - switch.mute_tv_kitchen
+    - script.snug_tv_chromecast
+    - script.snug_tv_sky
+
+Cleaning:
+  name: Cleaning
+  entities:
+    - vacuum.xiaomi_vacuum_cleaner

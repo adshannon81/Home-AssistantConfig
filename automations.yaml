@@ -1,0 +1,452 @@
+
+#  - alias: "Kitchen Lamp: Automatically turn off"
+#    trigger:
+#      platform: state
+#      entity_id: switch.kitchen_lamp
+#      to: 'on'
+#    action:
+#      service: script.turn_on
+#      entity_id: script.kitchen_lamp_timer
+#  - alias: "Kitchen Lamp: reset timer"
+#    trigger:
+#      platform: state
+#      entity_id: switch.kitchen_lamp
+#      to: 'off'
+#    action:
+#      service: script.turn_off
+#      entity_id: script.kitchen_lamp_timer
+
+
+
+## Media #################
+###################################
+  - alias: 'Chromecast ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.chromecast_on
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.living_room_chromecast
+
+ # - alias: 'TV OFF'
+ #   trigger:
+ #     platform: event
+ #     event_type: call_service
+ #     event_data:
+ #       service_data:
+ #         entity_id: switch.chromecast_on
+ #       service: turn_off
+ #   action:
+ #     service: homeassistant.turn_on
+ #     entity_id: script.living_room_sky
+  
+  - alias: 'Sky ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.sky_on
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.living_room_sky
+
+  - alias: 'Sky OFF'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.sky_on
+        service: turn_off
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.living_room_tv_off
+
+  - alias: 'TV ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.tv_on_off
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.living_room_tv_on
+
+  - alias: 'TV OFF'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.tv_on_off
+        service: turn_off
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.living_room_tv_off
+
+  - alias: "Chromecast playing"
+    trigger:
+      - platform: state
+        entity_id: media_player.living_room_tv
+        to: 'idle'
+        from: 'off'
+    action:
+      service: script.turn_on
+      entity_id: script.living_room_chromecast
+
+  - alias: "Chromecast Stopped"
+    trigger:
+      - platform: state
+        entity_id: media_player.living_room_tv
+        to: 'off'
+        from: 'idle'
+    action:
+      service: script.turn_on
+      entity_id: script.living_room_sky
+
+## Snug TV ##
+
+  - alias: 'Snug TV ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.snug_tv_on_off
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.snug_tv_on
+
+  - alias: 'Snug TV OFF'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.snug_tv_on_off
+        service: turn_off
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.snug_tv_off
+
+  - alias: 'Snug TV Sky ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.snug_tv_sky
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.snug_tv_sky
+
+  - alias: 'Snug TV Chromecast ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.snug_tv_chromecast
+        service: turn_off
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.snug_tv_chromecast
+
+  - alias: "Snug TV Chromecast playing"
+    trigger:
+      - platform: state
+        entity_id: media_player.snug_tv
+        to: 'idle'
+        from: 'off'
+    action:
+      service: script.turn_on
+      entity_id: script.snug_tv_chromecast
+
+  - alias: "Snug TV Chromecast Stopped"
+    trigger:
+      - platform: state
+        entity_id: media_player.snug_tv
+        to: 'off'
+        from: 'idle'
+    action:
+      service: script.turn_on
+      entity_id: script.snug_tv_sky
+
+## Hot Water Pump #################
+###################################
+
+  - alias: 'Hot Water ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.hot_water
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.hot_water_on
+
+  - alias: "Hot Water Pump: Automatically turn off"
+    trigger:
+      platform: state
+      entity_id: switch.hot_water
+      to: 'on'
+    action:
+      service: script.turn_on
+      entity_id: script.hot_water_pump_timer
+  - alias: "Hot Water Pump: reset timer"
+    trigger:
+      platform: state
+      entity_id: switch.hot_water
+      to: 'off'
+    action:
+      service: script.turn_off
+      entity_id: script.hot_water_pump_timer
+
+
+
+## Garage #################
+###################################
+  - alias: 'Garage ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.garage_door
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.garage_door_open
+
+  - alias: 'Garage OFF'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.garage_door
+        service: turn_off
+    action:
+      service: homeassistant.turn_off
+      entity_id: script.garage_door_close
+
+  - alias: Close Garage at midnight
+    trigger:
+      platform: time
+      at: '00:00:00'
+    action:
+      service: homeassistant.turn_off
+      entity_id: script.garage_door_close
+
+  
+ ## Automatic lighting ###########
+ #################################
+  - alias: Turn on porch light after sunset
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "-00:15:00"
+    action:
+      service: switch.turn_on
+      entity_id: switch.porch_lamp
+
+  - alias: Turn off porch light before sunrise
+    trigger:
+      platform: sun
+      event: sunrise
+      offset: "-00:30:00"
+    action:
+      service: switch.turn_off
+      entity_id: switch.porch_lamp
+
+  - alias: Turn on kitchen light before sunset
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "-00:20:00"
+    action:
+      service: switch.turn_on
+      entity_id: switch.kitchen_lamp
+  
+  - alias: Turn off kitchen light at midnight
+    trigger:
+      platform: time
+      at: '00:00:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.kitchen_lamp
+
+  - alias: Turn on snug light after sunset
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "+00:20:00"
+    action:
+      service: switch.turn_on
+      entity_id: switch.snug_lamp
+  
+  - alias: Turn off snug light at midnight
+    trigger:
+      platform: time
+      at: '00:00:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.snug_lamp
+
+  - alias: Turn on Living Room light after sunset
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "+00:40:00"
+    action:
+      service: switch.turn_on
+      entity_id: switch.living_room_lamp
+  
+  - alias: Turn off Living Room light at midnight
+    trigger:
+      platform: time
+      at: '00:27:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.living_room_lamp
+
+  - alias: 'All Lamps Off'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.all_lamps_on_off
+        service: turn_off
+    action:
+      service: homeassistant.turn_off
+      entity_id: group.lights2
+
+  - alias: 'All Lamps On'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.all_lamps_on_off
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: group.lights2
+
+
+   
+ ## Bedroom ###########
+ #################################
+  - alias: Turn on electric blanket at 9pm
+    trigger:
+      platform: time
+      at: '20:35:00'
+    condition:
+      condition: state
+      entity_id: device_tracker.bcfb
+      state: 'home'
+    action:
+      service: switch.turn_on
+      entity_id: switch.electric_blanket_brenda
+
+  - alias: Turn off electric blanket at midnight
+    trigger:
+      platform: time
+      at: '00:00:05'
+    action:
+      service: switch.turn_off
+      entity_id: switch.electric_blanket_brenda
+
+  - alias: Turn on electric blanket when arriving home
+    trigger:
+      platform: state
+      entity_id: device_tracker.bcfb
+      to: 'home'
+    condition:
+      condition: time
+      after: '20:35:00'
+      before: '00:00:00'
+    action:
+      service: switch.turn_on
+      entity_id: switch.electric_blanket_brenda
+
+
+
+ 
+ ## Announcements ###########
+ #################################
+  - alias: Flash light when Adam arrives home
+    trigger:
+      platform: state
+      entity_id: device_tracker.mr_scorpio
+      to: 'home'
+    action:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if  is_state('switch.kitchen_lamp', 'on') %}
+              script.flash_kitchen_lamp_on
+            {% else %}
+              script.flash_kitchen_lamp_off
+            {% endif %} 
+
+
+
+
+ ## Hoover ###########
+ #################################
+ 
+  - alias: "Jisiwei Hoover: Automatically switch to off"
+    trigger:
+      platform: state
+      entity_id: switch.robot_hoover_jisiwei
+      to: 'on'
+    action:
+      service: switch.turn_off
+      entity_id: switch.robot_hoover_jisiwei
+
+  - alias: "ILife Hoover: Automatically switch to off"
+    trigger:
+      platform: state
+      entity_id: switch.robot_hoover_ilife
+      to: 'on'
+    action:
+      service: switch.turn_off
+      entity_id: switch.robot_hoover_ilife
+
+  - alias: 'Roborock ON'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.roborock
+        service: turn_on
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.roborock_on
+
+  - alias: 'Roborock Return'
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.roborock
+        service: turn_off
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.roborock_off

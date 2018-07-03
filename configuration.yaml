@@ -1,0 +1,299 @@
+#192.168.1.128 - b4:43:0d:fc:1e:71 - RM Pro3
+#192.168.1.127 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
+#192.168.1.? - 34:ea:34:58:a2:c1 - RM Mini Living Room
+# roborock.vacuum.s5 - Roborock Vacuum - 49507a4e70504539525953676e333936 - 192.168.1.115
+#192.168.1.80 - Tendra W6-S access point
+
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 53.3472
+  longitude: -6.2439
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Dublin
+  
+  customize:
+    switch.kitchen_lamp:
+      icon: mdi:lightbulb-on-outline
+    switch.porch_lamp:
+      icon: mdi:lightbulb-on-outline
+    switch.snug_lamp:
+      icon: mdi:lightbulb-on-outline
+    switch.living_room_lamp:
+      icon: mdi:lightbulb-on-outline
+    switch.living_room_sky:
+      icon: mdi:power
+    switch.garage_door:
+      icon: mdi:garage
+    switch.electric_blanket_brenda:
+      icon: mdi:bed-empty
+    switch.hot_water:
+      icon: mdi:water-pump
+    switch.tv_on_off:
+      icon: mdi:television-classic
+    switch.snug_tv_on_off:
+      icon: mdi:television-classic
+    switch.roborock:
+      icon: mdi:robot-vacuum
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+#device_tracker:
+#  - platform: huawei_router
+#    host: 192.168.1.1
+#    username: admin
+#    password: !secret router_password
+#   interval_seconds: 30
+#   consider_home: 180
+#    new_device_defaults:
+#      track_new_devices: True
+#      hide_if_away: False
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.1.0/24
+    home_interval: 10
+
+
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.1.115
+    token: 49507a4e70504539525953676e333936
+
+zwave:
+   usb_path: /dev/ttyACM0
+   config_path: /srv/homeassistant/lib/python3.6/site-packages/python_openzwave/ozw_config
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+sensor:
+  platform: yr
+
+# Text to speech
+tts:
+  platform: google
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+media_player:
+  - platform: cast
+#    host: 192.168.1.110
+#  - platform: cast
+#    host: 192.168.1.107
+  - platform: plex 
+    entity_namespace: 'plex'
+    include_non_clients: true
+    scan_interval: 5
+    show_all_controls: false
+    use_custom_entity_ids: true
+    use_episode_art: true
+    remove_unavailable_clients: true
+    client_remove_interval: 600
+
+# Amazon Echo example configuration.yaml entry 
+emulated_hue:
+
+
+#input_slider:
+#  hot_water_pump_time:
+#    name: Hot Water Pump Time
+#    initial: 15
+#    min: 1
+#    max: 30
+#    step: 1
+#  kitchen_lamp_run_time:
+#    name: Kitchen Lamp Run Time
+#    initial: 10
+#    min: 1
+#    max: 60
+#    step: 1
+
+ 
+#switch livingroom_rm_mini:
+#  - platform: broadlink
+#    host: 192.168.1.96
+#    mac: '34:ea:34:58:a2:c1'
+#    timeout: 15
+#    friendly_name: "Living Room RM Mini"
+#    type: "rm_mini" 
+#    switches:
+#      mute_tv_livingroom:
+#        friendly_name: "Mute Living Room"
+#        command_on: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
+#        command_off: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
+
+switch kitchen_rm_mini:
+  - platform: broadlink
+    host: 192.168.1.127
+    mac: '34:ea:34:58:a9:67'
+    timeout: 15
+    friendly_name: "Kitchen RM Mini"
+    type: "rm_mini"
+    switches:
+      mute_tv_kitchen:
+        friendly_name: "Mute Snug TV"
+        command_on: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
+        command_off: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
+      robot_hoover_jisiwei:
+        friendly_name: "Kitchen Hoover"
+        command_on: 'JgCQAAABKpQTEhITExMTEhQRExMSORITEjkTOBM4FDcVNhI5ExITORI5ExISExIUExITEhMTEzgSExM4EjkUNxI5EzgTOBQSEgAFGwABKpQTExMSEhMTExITEhQROhITFTYTOBI5FDgYMxM4EhMSORM4ExMSExMSExMTEhITEjoSFBE5EjcVOBI5EjkSORQREgANBQAAAAAAAAAA=='
+        command_off: ''
+      robot_hoover_ilife:
+        friendly_name: "Kitchen Igor"
+        command_on: 'JgBIAAABJ5EVEBETFRETEhAUEBQROBQSEzUUERE4ExIUNRQSETYTEhQRExITNhQQFRESEhM2ExEVNRE4ExISNxQ1ETkUEBQ1EwANBQ=='
+        command_off: ''
+
+switch 1:
+  platform: broadlink
+  host: 192.168.1.128
+  mac: 'b4:43:0d:fc:1e:71'
+  timeout: 15
+  switches:
+    kitchen_lamp:
+      friendly_name: "Kitchen Lamp"
+      command_on: 'shM0AB8JCx0LHR8JHwkMHR8KHwoLHQsdHwofCQsdDB0fCh8KCx0LHQsdCx0fCR8JCx0LHQsAASsAAAAA'
+      command_off: 'siQ0AB4KCx4LHR8KHgoLHR8KHwoLHQsdHgofCgseCx0eCh4KCx0LHgsdCx4LHR8KCx0LHQsAASwAAAAA'
+    hot_water:
+      friendly_name: "Hot Water"
+      command_on: 'siI0AB8JCx0MHB8KHwkLHR8JHwkLHQwdHwkfCgsdDB0fCR8JCx0LHQsdCx0fCgsdHwoLHQsAASsAAAAA'
+      command_off: 'shI0AB8KCx0LHR8KHgoLHR4KHgoLHQsdHgoeCgsdCx0eCh8KCx0LHQsdCx0LHQsdHwoLHQsAASsAAAAA'
+    porch_lamp:
+      friendly_name: "Porch Lamp"
+      command_on: 'shA0AB8JCx0LHR8JHwkMHR8JHwkMHQsdHwkfCQsdDB0fCR8JCx0MHQsdDB0fCR8JCx0fCQsAASsAAAAA'
+      command_off: 'sh40AB8KCx0LHR8KHwkLHR8JHwkMHQsdHwkfCQwdCx0fCR8JDB0LHQwdCx0LHR8JDB0fCQwAASsAAAAA'
+    snug_lamp:
+      friendly_name: "Snug Lamp"
+      command_on: 'sjkyAAYQEQYGEBEGEQYRBQYQBxARBRAGBxAGEBAGBxAGEBEFB6AHEAYQBhAGEAYQEQYRBgYQAAAAAAAA'
+      command_off: 'sioyAAagBhAGEAYPBhAGEBAFEQUGEAYQEAUGDxEFEAUQBQYPBhARBRAGBhAGEAYQBhAGEBEFAAAAAAAA'
+    living_room_lamp:
+      friendly_name: "Living Room Lamp"
+      command_on: 'sikyAAYPBxAGEAYPBhARBREFBxAGDxEFBhARBREFEQUGEAYPEQURBQYQBw8RBQYQEQUGEAagAAAAAAAA'
+      command_off: 'siMyAAURDwcEEgSiBREEEQURBREEEg8HDgcEEQURDwcEEQ8HDwcPBwQRBREPBw8HBREFEQURAAAAAAAA'
+    electric_blanket_brenda:
+      friendly_name: "Electric Blanket (Brenda)"
+      command_on: 'sh0yAAURBREFEQURBREQBxAGBREFERAHBREQBxAHDwcFEQYREAcPBgURBREPBg8HBREFEQWiAAAAAAAA'
+      command_off: 'skYyAAYQEAYQBgYQBhAGEBAGBhAGEAagBhAGEAYQBhAGEBEGEAYGEAYQEAYGEBAGEAYQBgYQAAAAAAAA'
+    
+#    all_lamps:
+#      friendly_name: "All Lamps"
+#      command_on: group.lights2
+#      command_off: group.lights2
+#    living_room_tv:
+#      friendly_name: "Living Room TV"
+#      command_on: 'JgBwAAABJZcPFRAVEDoPFg8VEBUQFQ8WDzoQOg8WDzoQOg86EDoPOhAVEBUQFQ86EBUQFRAVDxYPOhA6DzoQFRA6DzoQOg86EAAFJwABJkwQAAxWAAElTQ8ADFYAASZMEAAMVgABJkwQAAxWAAEmTBAADQUAAAAAAAAAAA=='
+#      command_off: 'JgBwAAABJZcPFRAVEDoPFg8VEBUQFQ8WDzoQOg8WDzoQOg86EDoPOhAVEBUQFQ86EBUQFRAVDxYPOhA6DzoQFRA6DzoQOg86EAAFJwABJkwQAAxWAAElTQ8ADFYAASZMEAAMVgABJkwQAAxWAAEmTBAADQUAAAAAAAAAAA=='
+#    living_room_sky:
+#      friendly_name: "Living Room SKY"
+#      command_on: 'JgAwAFQhDBEMEA0fDh4bDw4PDg8NEA0QGh8aEQwQDR8ODw0QDQ8ODw4PGhEMHw4PDAANBQAAAAAAAAAA=='
+#      command_off: 'JgAwAFQhDBEMEA0fDh4bDw4PDg8NEA0QGh8aEQwQDR8ODw0QDQ8ODw4PGhEMHw4PDAANBQAAAAAAAAAA=='
+    mute_tv:
+      friendly_name: 'Mute'
+      command_on: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
+      command_off: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
+
+    garage_door:
+      friendly_name: "Garage Door"
+      command_on: 'sgCuAqQUEwcHEwcTFAYUBxMHFAYUBgcTBxQTBxQGBxMHFBMHEwcTBwcUBhQTBxQGBxMHExQHEwcGFAYUBxMHExQHEwcTBwYUBxMHEwcUBxMHExQHBhMHFBQGBxMUBwYTFQYGFBQGBxMHFAYUFAYHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAcTBwYUBxMUBhQGBxQGFBQGFAYUBgcUBxMUBhQGBxMHFBMHFAYHEwYUBxQGFBMHEwcUBgcUBhQGFAcUBhQGFBMHBhQGFBQHBhQTBwYUFAYHFBMGBxQGFAcTFAYHFAYUBhQHE6QUEwcGFAYUFAcTBxMHEwcUBgcTBxMUBxMHBxMHFBMHEwcTBwYUBxMUBhQHBhQGFBQGFAcGFAYUBhQHExQHEwcUBgcTBhUGFAYTBxQGFBQGBxQGFBMHBxMUBgcTFAcGFBMHBxMHEwcUEwcGFAcUBhMHFKQTEwcGFQYUEwcUBhQGFAYUBwYUBhQUBxMHBhQGFBMHFAYUBwYUBhQTBxMHBxQGFBMHFAYGFAcUBhQGFBMHFAcTBwYUBhQGFAcTBxQGFBMHBxMGFBQHBhQTBwYUEwcGFBQHBhQGFAYUEwgGFAYUBhQGFaMUEwcGFAYUFAYUBxMHEwcUBgcTBxQTBxMHBhQHExQHEwcTBwYUBhQUBxMHBhQGFBQGFAcGFAYUBhQHFBMHEwcTBwYUBhQHFAYUBhQHExQGBhQHFBMHBhQTBwcTFAcGFBMHBhQHEwcUEwcGFAYUBxQGFKMUFAYHEwcUEwcTBxQGFAYUBgcUBhQTBxQGBxQGFBMHEwcTCAYUBhQTBxMHBxMHFBMHEwcGFAcTBxQGFBMHEwcUBgcUBhQGFAcTBxQGExQHBhQGFBQGBxQTBwYUEwcHExQGBxQGFAYUEwcGFQYUBhQGAAXcFAYHEwcUEwcTBw=='
+      command_off: 'sgCuAqQTFAYHFAYUFAYUBhQGFAYUBwcTBxMUBhQHBxMHExQGFAYVBQgTBhQUBhQGBxMHFBQGFAYHEwcUBhQHExQGFAYUBgcUBxMHEwcTBxMVBQgTBhQHExQGBxQUBgcTFAYUBxMGCBMHEwcTFAYHEwcUBxMHE6QTFAcHEwcTFAYUBhQHFAYUBgcTBxQTBxQGBxMHExQGFAYUBwcTBxMUBxMGBxQHExQGFAYHEwcUBxMHExQGFAYUBwcTBxMHEwcTBxMUBwcTBxMHFBMHBxMUBgcTFAYUBhQHBhQHEwcTFAcGFAcTBxMHE6QUFAYHEwcTFAYUBxMHFAYUBgcTBxQUBhQGBxMHExQHFAYUBgcTBxMUBxQGBxMHExQHEwYHFAYUBxMHFBMHFAYUBgcTBxMHEwcUBxMUBgcTBxQHExQGBxMUBgcTFAcUBhQGBxMHFAcTEwcHEwcTBxMHFKQTFAYHEwcUFAYUBhQGFAYUBgcUBxMUBhQGBxQGExUGFAYUBgcTBxQUBhQGBxMHExQHFAYHEwcTBxMHFBQGFAYUBgcTBxQGFAcTBhQUBgcTBxMHFBQGBxMUBgcUFAYUBhQHBhQGFAYUFAYHEwcTBxQGFKQTFAYHEwcUFAYUBhQHEwYUBwYUBhQUBhQGBxQGFBQGFAYUBgcUBhQTBxQGBxMHFBMHFAYHEwcTBxMHFBQGFAYUBgcTBxQHEwYUBxMUBgcTBxQHExQGBxQTBgcUFAYUBhQGBxQGFAcTFAYHEwcUBxIIE6QTFAYHFAYUFAYUBhQGFAcUBgcTBxMUBhQHBxMHExQGFAYUBgcUBhQUBhQGBxMHFBQGFAYHEwcTBxQGFBQGFAYUBgcUBhQGFAcTBxMUBwYUBxMHExQHBhQTBwcTFAYUBhQHBhQHEwcTFAYHFAYUBhQHAAXcFAcGFAYUFAYUBg=='
+
+switch 2:
+  platform: command_line
+  switches:
+    tv_on_off:
+      friendly_name: 'Living Room TV'
+#      command_on: script.living_room_tv_on
+#      command_off: script.living_room_tv_off  
+    chromecast_on:
+      friendly_name: 'Chromecast Living Room TV'
+ #     command_on: script.living_room_chromecast
+ #     command_off: script.living_room_sky  
+    sky_on:
+      friendly_name: 'Sky Living Room TV'
+#      command_on: script.living_room_sky
+#      command_off: script.living_room_tv_off  
+    all_lamps_on_off:
+      friendly_name: 'All Lamps'
+#      command_on: script.living_room_sky
+#      command_off: script.living_room_tv_off  
+    darkness:
+      friendly_name: 'Darkness'
+## -- SNUG TV -- ##
+    snug_tv_on_off:
+      friendly_name: 'Snug TV'
+    snug_tv_sky:
+      friendly_name: 'Sky Snug TV'
+    snug_tv_chromecast:
+      friendly_name: 'Chromecast Snug TV' 
+    roborock:
+      friendly_name: 'Lurch' 
+
+#switch 3:
+#  platform: template
+#  sensors:
+#    vacuumstatus:
+#      friendly_name: "Vacuum Status"
+#      value_template: "{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.status }}"
+
+#switch 3:
+#  platform: template
+#  switches:
+#    chromecast_on_off:
+#      friendly_name: 'Chrome Cast'
+#      value_template: "{{ is_state_attr('switch.chromecast_on_off', 'sensor_state', 'on') }}"
+#      turn_on:
+#        service: script.living_room_chromecast
+#      turn_off:
+#        service: script.living_room_sky
+
+#  platform: template
+#  switches:
+#    tv_on_off:
+#      friendly_name: 'TV'
+#      value_template: "{{ is_state_attr('switch.tv_on_off', 'sensor_state', 'on') }}"
+#      turn_on:
+#        service: script.living_room_tv_on_off
+#      turn_off:
+#        service: script.living_room_tv_on_off

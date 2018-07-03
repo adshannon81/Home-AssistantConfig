@@ -1,0 +1,172 @@
+
+broadlink:
+  hide_if_away: false
+  icon:
+  mac: B4:43:0D:FC:1E:71
+  name: broadlink
+  picture:
+  track: false
+  vendor: unknown
+
+mr_scorpio:
+  hide_if_away: true
+  icon:
+  mac: C0:EE:FB:FD:7F:44
+  name: Adam
+  picture: /local/photos/adam.jpg
+  track: true
+  vendor: unknown
+
+lgwebostv:
+  hide_if_away: false
+  icon:
+  mac: 7C:1C:4E:76:5F:D5
+  name: LGwebOSTV
+  picture:
+  track: false
+  vendor: unknown
+
+48022d406bea:
+  hide_if_away: false
+  icon:
+  mac: 48:02:2D:40:6B:EA
+  name: '*'
+  picture:
+  track: false
+  vendor: unknown
+
+amazon76ca3257c:
+  hide_if_away: false
+  icon:
+  mac: AC:63:BE:DC:86:08
+  name: amazon-76ca3257c
+  picture:
+  track: false
+  vendor: Amazon Technologies Inc.
+
+brendasipad:
+  hide_if_away: false
+  icon:
+  mac: 8C:29:37:BF:E7:38
+  name: Brendas-iPad
+  picture:
+  track: false
+  vendor: unknown
+
+chromecast:
+  hide_if_away: false
+  icon:
+  mac: F4:F5:D8:F0:3D:36
+  name: Chromecast
+  picture:
+  track: false
+  vendor: unknown
+
+amazonf961881e3:
+  hide_if_away: false
+  icon:
+  mac: 40:B4:CD:84:B8:29
+  name: amazon-f961881e3
+  picture:
+  track: false
+  vendor: unknown
+
+f4f5d8937a6c:
+  hide_if_away: false
+  icon:
+  mac: F4:F5:D8:93:7A:6C
+  name: '*'
+  picture:
+  track: false
+  vendor: unknown
+
+bc307e1a0d2b:
+  hide_if_away: false
+  icon:
+  mac: BC:30:7E:1A:0D:2B
+  name: '*'
+  picture:
+  track: false
+  vendor: unknown
+
+rabbit:
+  hide_if_away: false
+  icon:
+  mac: 4C:0B:BE:22:1E:C8
+  name: Rabbit
+  picture:
+  track: false
+  vendor: unknown
+
+bcfb:
+  hide_if_away: true
+  icon:
+  mac: C0:EE:FB:F5:C8:0A
+  name: B-router
+  picture: /
+  track: true
+  vendor: OnePlus Tech (Shenzhen) Ltd
+
+78e103b245df:
+  hide_if_away: false
+  icon:
+  mac: 78:E1:03:B2:45:DF
+  name: Adams Kindle
+  picture:
+  track: false
+
+f04f7c9465e8:
+  hide_if_away: false
+  icon:
+  mac: F0:4F:7C:94:65:E8
+  name: Brendas Kindle
+  picture:
+  track: false
+
+2016d8470bff:
+  hide_if_away: false
+  icon:
+  mac: 20:16:D8:47:0B:FF
+  name: Brenda's laptop?
+  picture:
+  track: false
+
+pbeirnesiphone:
+  hide_if_away: true
+  icon:
+  mac: D0:81:7A:8E:1E:81
+  name: Pat
+  picture:
+  track: true
+
+paulinesiphone:
+  hide_if_away: true
+  icon:
+  mac: 88:6B:6E:5B:FE:F8
+  name: Pauline
+  picture:
+  track: true
+
+lgwebostv_2:
+  hide_if_away: true
+  icon:
+  mac: A0:6F:AA:98:36:A4
+  name: Large tV
+  picture:
+  track: false
+
+amazon929f87cc2:
+  hide_if_away: false
+  icon:
+  mac: 50:DC:E7:08:CB:D8
+  name: Echo (Kitchen)
+  picture:
+  track: false
+
+34ea3458a967:
+  hide_if_away: false
+  icon:
+  mac: 34:EA:34:58:A9:67
+  name: RM Mini (Kitchen)
+  picture:
+  track: false
