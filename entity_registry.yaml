@@ -1,32 +1,45 @@
 media_player.snug_tv:
+  config_entry_id:
   name:
   platform: cast
   unique_id: a5349750-6296-742d-2f45-6eca72121025
 media_player.living_room_tv:
+  config_entry_id:
   name:
   platform: cast
   unique_id: 4b3c3756-124f-261c-2b5a-0c488a7b7020
 media_player.plex_web_chrome:
+  config_entry_id:
   name: Plex Web Chrome
   platform: plex
   unique_id: rrtfx77abkqd0m7nme2xmo6j
 media_player.unnamed_device:
+  config_entry_id:
   name:
   platform: plex
   unique_id: qhi7z9yy1vqb0529zbmi4i9a
 media_player.chrome:
+  config_entry_id:
   name:
   platform: plex
   unique_id: hag4jxoi3pglkm1s6izde4fk
 media_player.unnamed_device_2:
+  config_entry_id:
   name:
   platform: plex
   unique_id: mvvwy4jkhw6lmcxre4s6tfxj
 zwave.aeotec_zw090_zstick_gen5_eu:
+  config_entry_id:
   name:
   platform: zwave
   unique_id: node-1
 media_player.rabbit:
+  config_entry_id:
   name:
   platform: plex
   unique_id: dq3bsj8vbfcm4pesracibpgb
+media_player.plex_plex_991fpoonjdc84cxrwc8u7hl8:
+  config_entry_id:
+  name:
+  platform: plex
+  unique_id: 991fpoonjdc84cxrwc8u7hl8
