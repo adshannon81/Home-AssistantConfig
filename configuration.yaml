@@ -1,4 +1,4 @@
-# - b4:43:0d:fc:1e:71 - RM Pro3
+#192.168.1.136 - b4:43:0d:fc:1e:71 - RM Pro3
 #192.168.1.135 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
 #192.168.1.? - 34:ea:34:58:a2:c1 - RM Mini Living Room
 # roborock.vacuum.s5 - Roborock Vacuum - 49507a4e70504539525953676e333936 - 192.168.1.115
@@ -188,7 +188,7 @@ switch kitchen_rm_mini:
 
 switch 1:
   platform: broadlink
-  host: 
+  host: 192.168.1.136 
   mac: 'b4:43:0d:fc:1e:71'
   timeout: 15
   switches:
@@ -269,6 +269,9 @@ switch 2:
       friendly_name: 'Chromecast Snug TV' 
     roborock:
       friendly_name: 'Lurch' 
+    ip_checker:
+      friendly_name: 'IP Checker'
+      command_on: ssh pi@192.168.1.99 'sudo /home/homeassistant/.homeassistant/IPChecker.sh'
 
 #switch 3:
 #  platform: template
