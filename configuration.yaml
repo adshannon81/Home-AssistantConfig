@@ -1,5 +1,5 @@
-#192.168.1.136 - b4:43:0d:fc:1e:71 - RM Pro3
-#192.168.1.135 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
+#192.168.1.146 - b4:43:0d:fc:1e:71 - RM Pro3
+#192.168.1.145 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
 #192.168.1.? - 34:ea:34:58:a2:c1 - RM Mini Living Room
 # roborock.vacuum.s5 - Roborock Vacuum - 49507a4e70504539525953676e333936 - 192.168.1.115
 #192.168.1.80 - Tendra W6-S access point
@@ -52,7 +52,7 @@ config:
 
 http:
   # Uncomment this to add a password (recommended!)
-  # api_password: PASSWORD
+   api_password: !secret api_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
 
@@ -94,6 +94,13 @@ zwave:
    usb_path: /dev/ttyACM0
    config_path: /srv/homeassistant/lib/python3.6/site-packages/python_openzwave/ozw_config
 
+mqtt:
+  broker: 192.168.1.99
+  port: 1883
+  client_id: home-assistant-1
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
@@ -119,7 +126,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 
 media_player:
-  - platform: cast
+#  - platform: cast
 #    host: 192.168.1.110
 #  - platform: cast
 #    host: 192.168.1.107
@@ -167,7 +174,7 @@ emulated_hue:
 
 switch kitchen_rm_mini:
   - platform: broadlink
-    host: 192.168.1.135
+    host: 192.168.1.145
     mac: '34:ea:34:58:a9:67'
     timeout: 15
     friendly_name: "Kitchen RM Mini"
@@ -188,7 +195,7 @@ switch kitchen_rm_mini:
 
 switch 1:
   platform: broadlink
-  host: 192.168.1.136 
+  host: 192.168.1.146 
   mac: 'b4:43:0d:fc:1e:71'
   timeout: 15
   switches:
