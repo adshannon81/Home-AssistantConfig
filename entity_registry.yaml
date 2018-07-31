@@ -43,3 +43,38 @@ media_player.plex_plex_991fpoonjdc84cxrwc8u7hl8:
   name:
   platform: plex
   unique_id: 991fpoonjdc84cxrwc8u7hl8
+zwave.neo_coolcam_doorwindow_detector:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-3
+sensor.neo_coolcam_doorwindow_detector_sourcenodeid:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 3-72057594094305313
+sensor.neo_coolcam_doorwindow_detector_access_control:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 3-72057594094305425
+sensor.neo_coolcam_doorwindow_detector_alarm_type:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 3-72057594094305281
+sensor.neo_coolcam_doorwindow_detector_alarm_level:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 3-72057594094305297
+binary_sensor.neo_coolcam_doorwindow_detector_sensor:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 3-72057594093240320
+media_player.plex_plex_iivclg8evjmnh2c540prszfj:
+  config_entry_id:
+  name:
+  platform: plex
+  unique_id: iivclg8evjmnh2c540prszfj

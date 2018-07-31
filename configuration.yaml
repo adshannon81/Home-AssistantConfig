@@ -1,5 +1,5 @@
-#192.168.1.146 - b4:43:0d:fc:1e:71 - RM Pro3
-#192.168.1.145 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
+#192.168.1.119 - b4:43:0d:fc:1e:71 - RM Pro3
+#192.168.1.120 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
 #192.168.1.? - 34:ea:34:58:a2:c1 - RM Mini Living Room
 # roborock.vacuum.s5 - Roborock Vacuum - 49507a4e70504539525953676e333936 - 192.168.1.115
 #192.168.1.80 - Tendra W6-S access point
@@ -142,6 +142,8 @@ media_player:
 
 # Amazon Echo example configuration.yaml entry 
 emulated_hue:
+  host_ip: 192.168.1.99
+  listen_port: 8300
 
 
 #input_slider:
@@ -174,7 +176,7 @@ emulated_hue:
 
 switch kitchen_rm_mini:
   - platform: broadlink
-    host: 192.168.1.145
+    host: 192.168.1.120
     mac: '34:ea:34:58:a9:67'
     timeout: 15
     friendly_name: "Kitchen RM Mini"
@@ -195,7 +197,7 @@ switch kitchen_rm_mini:
 
 switch 1:
   platform: broadlink
-  host: 192.168.1.146 
+  host: 192.168.1.119 
   mac: 'b4:43:0d:fc:1e:71'
   timeout: 15
   switches:
