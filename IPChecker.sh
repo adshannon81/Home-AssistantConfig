@@ -27,7 +27,7 @@ if [[ "$newIP" != "" ]]; then
   sudo sed -i -e "s/${currentIP}/${newIP}/g" /home/homeassistant/.homeassistant/configuration.yaml
   currentIP2=$( echo "$currentIP" | tr . _ )
   newIP2=$( echo "$newIP" | tr . _ )
-  sudo sed -i -e "s/${currentIP}/${newIP}/g" /home/homeassistant/.homeassistant/scripts.yaml
+  sudo sed -i -e "s/${currentIP2}/${newIP2}/g" /home/homeassistant/.homeassistant/scripts.yaml
   
   restartHA="1"
  fi
@@ -53,7 +53,7 @@ if [[ "$newIP"  != "" ]]; then
   sudo sed -i -e "s/${currentIP}/${newIP}/g" /home/homeassistant/.homeassistant/configuration.yaml
   currentIP2=$(echo "$currentIP" | tr . _ )
   newIP2=$(echo "$newIP" | tr . _ )
-  sudo sed -i -e "s/${currentIP}/${newIP}/g" /home/homeassistant/.homeassistant/scripts.yaml
+  sudo sed -i -e "s/${currentIP2}/${newIP2}/g" /home/homeassistant/.homeassistant/scripts.yaml
   restartHA=1
  fi
 else
