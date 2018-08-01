@@ -40,6 +40,18 @@ homeassistant:
       icon: mdi:television-classic
     switch.roborock:
       icon: mdi:robot-vacuum
+    sensor.neo_coolcam_doorwindow_detector_access_control:
+      hidden: true
+    sensor.neo_coolcam_doorwindow_detector_alarm_level:
+      hidden: true
+    sensor.neo_coolcam_doorwindow_detector_alarm_type:
+      hidden: true
+    sensor.neo_coolcam_doorwindow_detector_sourcenodeid:
+      hidden: true
+    binary_sensor.neo_coolcam_doorwindow_detector_sensor:
+      hidden: true
+#    binary_sensor.garage_door:
+#      hidden: true
 
 # Show links to resources in log and frontend
 #introduction:
@@ -93,6 +105,11 @@ vacuum:
 zwave:
    usb_path: /dev/ttyACM0
    config_path: /srv/homeassistant/lib/python3.6/site-packages/python_openzwave/ozw_config
+
+weather: 
+  - platform: darksky
+    api_key: 980116f7cdf95517d08de54a87b1b02b
+
 
 mqtt:
   broker: 192.168.1.99
@@ -281,6 +298,17 @@ switch 2:
     ip_checker:
       friendly_name: 'IP Checker'
       command_on: ssh pi@192.168.1.99 'sudo /home/homeassistant/.homeassistant/IPChecker.sh'
+
+binary_sensor:
+  platform: template
+  sensors:
+    garage_door:
+      friendly_name: "Garage Door"
+      device_class: garage_door
+      value_template: "{{ is_state('binary_sensor.neo_coolcam_doorwindow_detector_sensor', 'on') }}"
+
+
+
 
 #switch 3:
 #  platform: template

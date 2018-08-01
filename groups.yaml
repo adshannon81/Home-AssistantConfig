@@ -42,6 +42,7 @@ switches:
     - switch.hot_water
     - switch.electric_blanket_brenda
     - switch.garage_door
+    - binary_sensor.garage_door
     - switch.roborock
 
 TV:
