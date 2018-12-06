@@ -350,58 +350,58 @@
    
  ## Bedroom ###########
  #################################
-  - alias: Turn on electric blanket at 9pm
-    trigger:
-      platform: time
-      at: '20:35:00'
-    condition:
-      condition: state
-      entity_id: device_tracker.bcfb
-      state: 'home'
-    action:
-      service: switch.turn_on
-      entity_id: switch.electric_blanket_brenda
-
-  - alias: Turn off electric blanket at midnight
-    trigger:
-      platform: time
-      at: '00:00:05'
-    action:
-      service: switch.turn_off
-      entity_id: switch.electric_blanket_brenda
-
-  - alias: Turn on electric blanket when arriving home
-    trigger:
-      platform: state
-      entity_id: device_tracker.bcfb
-      to: 'home'
-    condition:
-      condition: time
-      after: '20:35:00'
-      before: '00:00:00'
-    action:
-      service: switch.turn_on
-      entity_id: switch.electric_blanket_brenda
+#  - alias: Turn on electric blanket at 9pm
+#    trigger:
+#      platform: time
+#      at: '20:35:00'
+#    condition:
+#      condition: state
+#      entity_id: device_tracker.bcfb
+#      state: 'home'
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.electric_blanket_brenda
+#
+#  - alias: Turn off electric blanket at midnight
+#    trigger:
+#      platform: time
+#      at: '00:00:05'
+#    action:
+#      service: switch.turn_off
+#      entity_id: switch.electric_blanket_brenda
+#
+#  - alias: Turn on electric blanket when arriving home
+#    trigger:
+#      platform: state
+#      entity_id: device_tracker.bcfb
+#      to: 'home'
+#    condition:
+#      condition: time
+#      after: '20:35:00'
+#      before: '00:00:00'
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.electric_blanket_brenda
 
 
 
  
  ## Announcements ###########
  #################################
-  - alias: Flash light when Adam arrives home
-    trigger:
-      platform: state
-      entity_id: device_tracker.mr_scorpio
-      to: 'home'
-    action:
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if  is_state('switch.kitchen_lamp', 'on') %}
-              script.flash_kitchen_lamp_on
-            {% else %}
-              script.flash_kitchen_lamp_off
-            {% endif %} 
+#  - alias: Flash light when Adam arrives home
+#    trigger:
+#      platform: state
+#      entity_id: device_tracker.mr_scorpio
+#      to: 'home'
+#    action:
+#      - service: script.turn_on
+#        data_template:
+#          entity_id: >
+#            {% if  is_state('switch.kitchen_lamp', 'on') %}
+#              script.flash_kitchen_lamp_on
+#            {% else %}
+#              script.flash_kitchen_lamp_off
+#            {% endif %} 
 
 
 

@@ -8,7 +8,7 @@ simple:
     - group.switches
     - group.TV
     - group.TV_Snug
-    - group.Cleaning
+#    - group.Cleaning
     - media_player.living_room_tv
     - media_player.snug_tv
 
@@ -63,7 +63,7 @@ TV_Snug:
     - script.snug_tv_chromecast
     - script.snug_tv_sky
 
-Cleaning:
-  name: Cleaning
-  entities:
-    - vacuum.xiaomi_vacuum_cleaner
+#Cleaning:
+#  name: Cleaning
+#  entities:
+#    - vacuum.xiaomi_vacuum_cleaner

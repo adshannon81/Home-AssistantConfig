@@ -1,8 +1,11 @@
-#192.168.1.119 - b4:43:0d:fc:1e:71 - RM Pro3
-#192.168.1.120 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
+#192.168.1.14 - b4:43:0d:fc:1e:71 - RM Pro3
+#192.168.1.61 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
 #192.168.1.? - 34:ea:34:58:a2:c1 - RM Mini Living Room
 # roborock.vacuum.s5 - Roborock Vacuum - 49507a4e70504539525953676e333936 - 192.168.1.115
-#192.168.1.80 - Tendra W6-S access point
+#192.168.1.81 - Tendra W6-S access point bedroom
+#192.168.1.83 - Tendra W9 access point Snug
+#192.168.1.84 - Tendra W9 access point Porch
+#192.168.1.50 - Security Cameras
 
 homeassistant:
   # Name of the location where Home Assistant is running
@@ -30,8 +33,8 @@ homeassistant:
       icon: mdi:power
     switch.garage_door:
       icon: mdi:garage
-    switch.electric_blanket_brenda:
-      icon: mdi:bed-empty
+#    switch.electric_blanket_brenda:
+#      icon: mdi:bed-empty
     switch.hot_water:
       icon: mdi:water-pump
     switch.tv_on_off:
@@ -64,9 +67,11 @@ config:
 
 http:
   # Uncomment this to add a password (recommended!)
-   api_password: !secret api_password
+  api_password: !secret api_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
+  trusted_networks:
+   - 192.168.1.0/24
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -85,8 +90,8 @@ discovery:
 #    host: 192.168.1.1
 #    username: admin
 #    password: !secret router_password
-#   interval_seconds: 30
-#   consider_home: 180
+#    interval_seconds: 30
+#    consider_home: 180
 #    new_device_defaults:
 #      track_new_devices: True
 #      hide_if_away: False
@@ -95,12 +100,15 @@ device_tracker:
   - platform: nmap_tracker
     hosts: 192.168.1.0/24
     home_interval: 10
+    exclude:
+     - 192.168.1.1
+    
 
 
-vacuum:
-  - platform: xiaomi_miio
-    host: 192.168.1.115
-    token: 49507a4e70504539525953676e333936
+#vacuum:
+#  - platform: xiaomi_miio
+#    host: 192.168.1.115
+#    token: 49507a4e70504539525953676e333936
 
 zwave:
    usb_path: /dev/ttyACM0
@@ -109,7 +117,7 @@ zwave:
 weather: 
   - platform: darksky
     api_key: 980116f7cdf95517d08de54a87b1b02b
-
+  - platform: yweather
 
 mqtt:
   broker: 192.168.1.99
@@ -135,8 +143,8 @@ sensor:
   platform: yr
 
 # Text to speech
-tts:
-  platform: google
+#tts:
+#  platform: google
 
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -144,7 +152,7 @@ script: !include scripts.yaml
 
 media_player:
 #  - platform: cast
-#    host: 192.168.1.110
+#    host: 192.168.1.14
 #  - platform: cast
 #    host: 192.168.1.107
   - platform: plex 
@@ -160,8 +168,11 @@ media_player:
 # Amazon Echo example configuration.yaml entry 
 emulated_hue:
   host_ip: 192.168.1.99
-  listen_port: 8300
+  listen_port: 80
 
+camera:
+  - platform: generic
+    still_image_url: http://192.168.1.50/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand=0.7046812061041008
 
 #input_slider:
 #  hot_water_pump_time:
@@ -193,7 +204,7 @@ emulated_hue:
 
 switch kitchen_rm_mini:
   - platform: broadlink
-    host: 192.168.1.120
+    host: 192.168.1.61
     mac: '34:ea:34:58:a9:67'
     timeout: 15
     friendly_name: "Kitchen RM Mini"
@@ -214,7 +225,7 @@ switch kitchen_rm_mini:
 
 switch 1:
   platform: broadlink
-  host: 192.168.1.119 
+  host: 192.168.1.14 
   mac: 'b4:43:0d:fc:1e:71'
   timeout: 15
   switches:
@@ -238,10 +249,10 @@ switch 1:
       friendly_name: "Living Room Lamp"
       command_on: 'sikyAAYPBxAGEAYPBhARBREFBxAGDxEFBhARBREFEQUGEAYPEQURBQYQBw8RBQYQEQUGEAagAAAAAAAA'
       command_off: 'siMyAAURDwcEEgSiBREEEQURBREEEg8HDgcEEQURDwcEEQ8HDwcPBwQRBREPBw8HBREFEQURAAAAAAAA'
-    electric_blanket_brenda:
-      friendly_name: "Electric Blanket (Brenda)"
-      command_on: 'sh0yAAURBREFEQURBREQBxAGBREFERAHBREQBxAHDwcFEQYREAcPBgURBREPBg8HBREFEQWiAAAAAAAA'
-      command_off: 'skYyAAYQEAYQBgYQBhAGEBAGBhAGEAagBhAGEAYQBhAGEBEGEAYGEAYQEAYGEBAGEAYQBgYQAAAAAAAA'
+#    electric_blanket_brenda:
+#      friendly_name: "Electric Blanket (Brenda)"
+#      command_on: 'sh0yAAURBREFEQURBREQBxAGBREFERAHBREQBxAHDwcFEQYREAcPBgURBREPBg8HBREFEQWiAAAAAAAA'
+#      command_off: 'skYyAAYQEAYQBgYQBhAGEBAGBhAGEAagBhAGEAYQBhAGEBEGEAYGEAYQEAYGEBAGEAYQBgYQAAAAAAAA'
     
 #    all_lamps:
 #      friendly_name: "All Lamps"
@@ -293,8 +304,8 @@ switch 2:
       friendly_name: 'Sky Snug TV'
     snug_tv_chromecast:
       friendly_name: 'Chromecast Snug TV' 
-    roborock:
-      friendly_name: 'Lurch' 
+#    roborock:
+#      friendly_name: 'Lurch' 
     ip_checker:
       friendly_name: 'IP Checker'
       command_on: ssh pi@192.168.1.99 'sudo /home/homeassistant/.homeassistant/IPChecker.sh'
@@ -337,3 +348,16 @@ binary_sensor:
 #        service: script.living_room_tv_on_off
 #      turn_off:
 #        service: script.living_room_tv_on_off
+
+
+weblink:
+  entities:
+    - name: Plex
+      url: http://192.168.1.99:32400
+      icon: mdi:plex
+    - name: Sonarr
+      url: http://192.168.1.99:8989
+      icon: mdi:television-box
+    - name: Radarr
+      url: http://192.168.1.99:7878
+      icon: mdi:movie
