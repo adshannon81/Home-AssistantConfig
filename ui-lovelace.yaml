@@ -51,21 +51,48 @@ views:
               tap_action: toggle
 
         - type: glance
-          title: Switches
+          title: Water
           show_state: false
           entities:
             - entity: switch.hot_water
               tap_action: toggle
-            - entity: switch.electric_blanket_brenda
+
+        - type: glance
+          title: Outside
+          show_name: true
+          show_state: false
+          entities:
+            - entity: switch.outside_lights_back
+              tap_action: toggle
+            - entity: switch.outside_lights_front
+              tap_action: toggle
+            - entity: switch.house_gate
               tap_action: toggle
             - entity: switch.garage_door
               tap_action: toggle
+
+
+#            - entity: switch.electric_blanket_brenda
+#              tap_action: toggle
 #            - entity: switch.roborock
 #              tap_Action: toggle
 
-      - type: weather-forecast
-        entity: weather.yweather
-        name: Weather
+#### CHRISTMAS #####
+#      - type: glance
+#        title: Christmas
+#        show_state: false
+#        entities: 
+#          - entity: switch.christmas_tree
+#            tap_action: toggle
+#          - entity: switch.christmas_lights_kitchen
+#            tap_action: toggle
+#          - entity: switch.christmas_lights_porch
+#            tap_action: toggle
+   
+#### WEATHER #####   
+#      - type: weather-forecast
+#        entity: weather.yweather
+#        name: Weather
 
 #      - type: iframe
 #        url: https://www.powr.io/plugins/weather/view?unique_label=7690c273_1533136555&external_type=iframe
@@ -129,15 +156,15 @@ views:
               background: RGBA(255,255,255,0.7)
               border: 1px solid black
               border-radius: 25%
-          - type: state-icon
-            tap_action: toggle
-            entity: switch.electric_blanket_brenda
-            style:
-              top: 75%
-              left: 32%
-              background : RGBA(255,255,255,0.7)
-              border: 1px solid black
-              border-radius: 25%
+#          - type: state-icon
+#            tap_action: toggle
+#            entity: switch.electric_blanket_brenda
+#            style:
+#              top: 75%
+#              left: 32%
+#              background : RGBA(255,255,255,0.7)
+#              border: 1px solid black
+#              border-radius: 25%
           - type: state-icon
             tap_action: toggle
             entity: switch.garage_door
@@ -149,10 +176,10 @@ views:
               border-radius: 25%
           - type: state-icon
             tap_action: toggle
-            entity: switch.roborock
+            entity: switch.outside_lights_back
             style:
-              top: 65%
-              left: 75%
+              top: 33%
+              left: 62%
               background: RGBA(255,255,255,0.7)
               border: 1px solid black
               border-radius: 25%

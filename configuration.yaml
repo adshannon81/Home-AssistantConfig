@@ -1,5 +1,5 @@
-#192.168.1.14 - b4:43:0d:fc:1e:71 - RM Pro3
-#192.168.1.61 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
+#192.168.1.15 - b4:43:0d:fc:1e:71 - RM Pro3
+#192.168.1.62 - 34:ea:34:58:a9:67 - RM Mini Kitchen   
 #192.168.1.? - 34:ea:34:58:a2:c1 - RM Mini Living Room
 # roborock.vacuum.s5 - Roborock Vacuum - 49507a4e70504539525953676e333936 - 192.168.1.115
 #192.168.1.81 - Tendra W6-S access point bedroom
@@ -33,8 +33,12 @@ homeassistant:
       icon: mdi:power
     switch.garage_door:
       icon: mdi:garage
-#    switch.electric_blanket_brenda:
-#      icon: mdi:bed-empty
+#    switch.christmas_tree:
+#      icon: mdi:pine-tree
+#    switch.christmas_lights_porch:
+#      icon: mdi:lightbulb-on-outline
+#    switch.christmas_lights_kitchen:
+#      icon: mdi:lightbulb-on-outline
     switch.hot_water:
       icon: mdi:water-pump
     switch.tv_on_off:
@@ -43,6 +47,12 @@ homeassistant:
       icon: mdi:television-classic
     switch.roborock:
       icon: mdi:robot-vacuum
+    switch.house_gate:
+      icon: mdi:gate
+    switch.outside_lights_back:
+      icon: mdi:lightbulb-on-outline
+    switch.outside_lights_front:
+      icon: mdi:lightbulb-on-outline
     sensor.neo_coolcam_doorwindow_detector_access_control:
       hidden: true
     sensor.neo_coolcam_doorwindow_detector_alarm_level:
@@ -78,7 +88,7 @@ http:
 # the developers to assist with development of Home Assistant.
 # For more information, please see:
 # https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
+#updater:
   # Optional, allows Home Assistant developers to focus on popular components.
   # include_used_components: true
 
@@ -117,7 +127,7 @@ zwave:
 weather: 
   - platform: darksky
     api_key: 980116f7cdf95517d08de54a87b1b02b
-  - platform: yweather
+#  - platform: yweather
 
 mqtt:
   broker: 192.168.1.99
@@ -152,7 +162,7 @@ script: !include scripts.yaml
 
 media_player:
 #  - platform: cast
-#    host: 192.168.1.14
+#    host: 192.168.1.15
 #  - platform: cast
 #    host: 192.168.1.107
   - platform: plex 
@@ -173,6 +183,18 @@ emulated_hue:
 camera:
   - platform: generic
     still_image_url: http://192.168.1.50/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand=0.7046812061041008
+
+twilio:
+  account_sid: AC31e9872897c0373284015f78156b1437
+  auth_token: 0f5c4a33e4d03985d273364c354e3e42
+
+notify:
+  - name: Adam
+    platform: twilio_sms
+    from_number: +353876667708
+  - name: Adam_Phone
+    platform: twilio_call
+    from_number: +353876667708
 
 #input_slider:
 #  hot_water_pump_time:
@@ -204,7 +226,7 @@ camera:
 
 switch kitchen_rm_mini:
   - platform: broadlink
-    host: 192.168.1.61
+    host: 192.168.1.62
     mac: '34:ea:34:58:a9:67'
     timeout: 15
     friendly_name: "Kitchen RM Mini"
@@ -225,7 +247,7 @@ switch kitchen_rm_mini:
 
 switch 1:
   platform: broadlink
-  host: 192.168.1.14 
+  host: 192.168.1.15 
   mac: 'b4:43:0d:fc:1e:71'
   timeout: 15
   switches:
@@ -249,10 +271,30 @@ switch 1:
       friendly_name: "Living Room Lamp"
       command_on: 'sikyAAYPBxAGEAYPBhARBREFBxAGDxEFBhARBREFEQUGEAYPEQURBQYQBw8RBQYQEQUGEAagAAAAAAAA'
       command_off: 'siMyAAURDwcEEgSiBREEEQURBREEEg8HDgcEEQURDwcEEQ8HDwcPBwQRBREPBw8HBREFEQURAAAAAAAA'
-#    electric_blanket_brenda:
-#      friendly_name: "Electric Blanket (Brenda)"
+    outside_lights_back:  # RF Switch one
+      friendly_name: "Garden Lights"
+      command_on: 'sgw0ACQNDSQkDSQNJA0kDSQNDSQkDQ0kDSQkDQ0kDSQkDSQNDSQNJA0kJA0NJA0kJA0kDQwAAW8AAAAA'
+      command_off: 'sgw0ACQNDSQkDSQNJA0kDSQNDSQkDQ0kDSQkDQ0kDSQkDSQNDSQNJA0kJA0NJA0kJA0kDQwAAW8AAAAA'
+    outside_lights_front:  # RF Switch two
+      friendly_name: "Driveway Lights"
+      command_on: 'sgw0AA0kJA0kDSQNJA0NJA0kJA0kDSQNDSQkDSQNDSQNJCQNJA0NJCQNDSQNJCQNJA0kDQwAAW8AAAAA'
+      command_off: 'sgw0AA0kJA0kDSQNJA0NJA0kJA0kDSQNDSQkDSQNDSQNJCQNJA0NJCQNDSQNJCQNJA0kDQwAAW8AAAAA'
+
+
+##### CHRISTMAS ####
+#
+#	  christmas_tree:
+#      friendly_name: "Christmas Tree"
 #      command_on: 'sh0yAAURBREFEQURBREQBxAGBREFERAHBREQBxAHDwcFEQYREAcPBgURBREPBg8HBREFEQWiAAAAAAAA'
 #      command_off: 'skYyAAYQEAYQBgYQBhAGEBAGBhAGEAagBhAGEAYQBhAGEBEGEAYGEAYQEAYGEBAGEAYQBgYQAAAAAAAA'
+#    christmas_lights_kitchen:
+#      friendly_name: "Christmas Kitchen"
+#      command_on: 'siUyABAGBqEGEAYQBhAGEAYQEQYQBgYQBhAQBgYQEAYQBhAGBhAGEBEFEQUGEAYQEAUGEBAGAAAAAAAA'
+#      command_off: 'sksyAAahBhAGEAYRBhAGEBEGEAYGEAYQEAYGEBEGEQYQBgYQBhARBRAGBhAGEQYQBhARBhAGAAAAAAAA'
+#    christmas_lights_porch:
+#      friendly_name: "Christmas Porch"
+#      command_on: 'skIyAAYQBhAGEAUQEQUQBgYQBhAQBgYQEAYRBhAGBhAGEBEGEAYGEAYQEQYQBQYQEAYGoQYQAAAAAAAA'
+#      command_off: 'shsyAAYQBhAGEAYQBhAQBhAGBhAGEBAGBhAQBhAFEAYGEAYQEAYQBgYQBhAGEBAGBhAQBQagAAAAAAAA'
     
 #    all_lamps:
 #      friendly_name: "All Lamps"
@@ -309,6 +351,8 @@ switch 2:
     ip_checker:
       friendly_name: 'IP Checker'
       command_on: ssh pi@192.168.1.99 'sudo /home/homeassistant/.homeassistant/IPChecker.sh'
+    house_gate:
+      friendly_name: 'Gate'
 
 binary_sensor:
   platform: template

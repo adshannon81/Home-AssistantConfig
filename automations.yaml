@@ -250,6 +250,41 @@
       service: homeassistant.turn_off
       entity_id: script.garage_door_close
 
+
+## House Gate #################
+###################################
+  - alias: House Gate
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.house_gate
+        service: turn_on
+    action:
+      service: notify.adam_phone
+      data:
+        message: ''
+        target:
+          - '+353894205689'  #+353894205689  #'+353876667708'  
+#    action:
+#      service: notify.adam
+#      data:
+#        message: 'House Gate'
+#        target:
+#          - '+353876667708'
+
+  - alias: House Gate Off
+    trigger:
+      platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: switch.house_gate
+        service: turn_on
+    action:
+      service: script.turn_on
+      entity_id: script.gate_off_auto
   
  ## Automatic lighting ###########
  #################################
@@ -346,6 +381,94 @@
       service: homeassistant.turn_on
       entity_id: group.lights2
 
+  - alias: Turn on back outside lights after sunset
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "+00:30:00"
+    action:
+      service: switch.turn_on
+      entity_id: switch.outside_lights_back
+
+  - alias: Turn off back outside lights at midnight
+    trigger:
+      platform: time
+      at: '23:30:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.outside_lights_back
+
+  - alias: Turn on front outside lights after sunset
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "+01:00:00"
+    action:
+      service: switch.turn_on
+      entity_id: switch.outside_lights_front
+
+  - alias: Turn off front outside lights at midnight
+    trigger:
+      platform: time
+      at: '23:00:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.outside_lights_front
+
+
+## Chrtimas Lights ########
+#################################
+#
+#  - alias: Turn on Christmas tree when getting dark
+#    trigger:
+#      platform: sun
+#      event: sunset
+#      offset: "-02:00:00"
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.christmas_tree
+#
+#  - alias: Turn off Christmas tree at 1am
+#    trigger:
+#      platform: time
+#      at: '01:00:00'
+#    action:
+#      service: switch.turn_off
+#      entity_id: switch.christmas_tree
+#
+#  - alias: Turn on Christmas Lights kitchen when getting dark
+#    trigger:
+#      platform: sun
+#      event: sunset
+#      offset: "-02:00:00"
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.christmas_lights_kitchen
+#
+#  - alias: Turn off Christmas lights kitchen at 1am
+#    trigger:
+#      platform: time
+#      at: '01:00:00'
+#    action:
+#      service: switch.turn_off
+#      entity_id: switch.christmas_lights_kitchen
+#
+#  - alias: Turn on Christmas lights porch when getting dark
+#    trigger:
+#      platform: sun
+#      event: sunset
+#      offset: "-02:00:00"
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.christmas_lights_porch
+#
+#  - alias: Turn off Christmas lights portch at 1am
+#    trigger:
+#      platform: time
+#      at: '01:00:00'
+#    action:
+#      service: switch.turn_off
+#      entity_id: switch.christmas_lights_porch
 
    
  ## Bedroom ###########
