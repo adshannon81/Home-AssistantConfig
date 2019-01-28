@@ -1,21 +1,4 @@
 
-#  - alias: "Kitchen Lamp: Automatically turn off"
-#    trigger:
-#      platform: state
-#      entity_id: switch.kitchen_lamp
-#      to: 'on'
-#    action:
-#      service: script.turn_on
-#      entity_id: script.kitchen_lamp_timer
-#  - alias: "Kitchen Lamp: reset timer"
-#    trigger:
-#      platform: state
-#      entity_id: switch.kitchen_lamp
-#      to: 'off'
-#    action:
-#      service: script.turn_off
-#      entity_id: script.kitchen_lamp_timer
-
 
 
 ## Media #################
@@ -182,17 +165,18 @@
       service: script.turn_on
       entity_id: script.snug_tv_sky
 
+
+
+###################################
 ## Hot Water Pump #################
 ###################################
 
   - alias: 'Hot Water ON'
     trigger:
-      platform: event
-      event_type: call_service
-      event_data:
-        service_data:
-          entity_id: switch.hot_water
-        service: turn_on
+      platform: state
+      entity_id: switch.hot_water
+      to: 'on'
+      from: 'off'
     action:
       service: homeassistant.turn_on
       entity_id: script.hot_water_on
@@ -202,21 +186,25 @@
       platform: state
       entity_id: switch.hot_water
       to: 'on'
+      from: 'off'
     action:
       service: script.turn_on
       entity_id: script.hot_water_pump_timer
+
   - alias: "Hot Water Pump: reset timer"
     trigger:
       platform: state
       entity_id: switch.hot_water
       to: 'off'
+      from: 'on'
     action:
       service: script.turn_off
       entity_id: script.hot_water_pump_timer
 
 
 
-## Garage #################
+###################################
+## Garage #########################
 ###################################
   - alias: 'Garage ON'
     trigger:
@@ -251,8 +239,10 @@
       entity_id: script.garage_door_close
 
 
-## House Gate #################
 ###################################
+## House Gate #####################
+###################################
+  
   - alias: House Gate
     trigger:
       platform: event
@@ -261,38 +251,53 @@
         service_data:
           entity_id: switch.house_gate
         service: turn_on
+    condition:
+      condition: state
+      entity_id: switch.house_gate
+      state: 'off'
     action:
-      service: notify.adam_phone
+      service: homeassistant.turn_on
       data:
-        message: ''
-        target:
-          - '+353894205689'  #+353894205689  #'+353876667708'  
-#    action:
-#      service: notify.adam
-#      data:
-#        message: 'House Gate'
-#        target:
-#          - '+353876667708'
+        entity_id: script.gate_house_open
 
-  - alias: House Gate Off
-    trigger:
-      platform: event
-      event_type: call_service
-      event_data:
-        service_data:
-          entity_id: switch.house_gate
-        service: turn_on
-    action:
-      service: script.turn_on
-      entity_id: script.gate_off_auto
+#  - alias: Adam Arrives Home
+#    trigger:
+#      platform: zone
+#      entity_id: device_tracker.adam_phoneadam
+#      zone: zone.home
+#      event: enter
+#    condition:
+#      condition: state
+#      entity_id: device_tracker.mr_scorpio
+#      state: 'not_home'
+#      for: 
+#        minutes: 10
+#    action:
+#      service: homeassistant.turn_on
+#      data:
+#        entity_id: switch.house_gate
+
+
   
- ## Automatic lighting ###########
- #################################
-  - alias: Turn on porch light after sunset
+###################################
+## Automatic lighting ###########
+#################################
+#  - alias: Turn on porch light after sunset
+#    trigger:
+#      platform: sun
+#      event: sunset
+#      offset: "-00:15:00"
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.porch_lamp
+
+  - alias: "Turn on porch as sun lowers"
     trigger:
-      platform: sun
-      event: sunset
-      offset: "-00:15:00"
+      platform: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation }}"
+      # Can be a positive or negative number
+      below: -4.0
     action:
       service: switch.turn_on
       entity_id: switch.porch_lamp
@@ -383,9 +388,15 @@
 
   - alias: Turn on back outside lights after sunset
     trigger:
-      platform: sun
-      event: sunset
-      offset: "+00:30:00"
+      platform: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation }}"
+      # Can be a positive or negative number
+      below: -4.0
+    condition:
+      condition: state
+      entity_id: switch.outside_lights_back
+      state: 'off'
     action:
       service: switch.turn_on
       entity_id: switch.outside_lights_back
@@ -394,15 +405,25 @@
     trigger:
       platform: time
       at: '23:30:00'
+    condition:
+      condition: state
+      entity_id: switch.outside_lights_back
+      state: 'on'
     action:
       service: switch.turn_off
       entity_id: switch.outside_lights_back
 
   - alias: Turn on front outside lights after sunset
     trigger:
-      platform: sun
-      event: sunset
-      offset: "+01:00:00"
+      platform: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation }}"
+      # Can be a positive or negative number
+      below: -4.0
+    condition:
+      condition: state
+      entity_id: switch.outside_lights_front
+      state: 'off'
     action:
       service: switch.turn_on
       entity_id: switch.outside_lights_front
@@ -411,11 +432,16 @@
     trigger:
       platform: time
       at: '23:00:00'
+    condition:
+      condition: state
+      entity_id: switch.outside_lights_back
+      state: 'on'
     action:
       service: switch.turn_off
       entity_id: switch.outside_lights_front
 
 
+###################################
 ## Chrtimas Lights ########
 #################################
 #
@@ -470,9 +496,11 @@
 #      service: switch.turn_off
 #      entity_id: switch.christmas_lights_porch
 
-   
- ## Bedroom ###########
- #################################
+
+
+################################# 
+## Bedroom ######################
+#################################
 #  - alias: Turn on electric blanket at 9pm
 #    trigger:
 #      platform: time
@@ -508,68 +536,52 @@
 
 
 
- 
- ## Announcements ###########
- #################################
-#  - alias: Flash light when Adam arrives home
-#    trigger:
-#      platform: state
-#      entity_id: device_tracker.mr_scorpio
-#      to: 'home'
-#    action:
-#      - service: script.turn_on
-#        data_template:
-#          entity_id: >
-#            {% if  is_state('switch.kitchen_lamp', 'on') %}
-#              script.flash_kitchen_lamp_on
-#            {% else %}
-#              script.flash_kitchen_lamp_off
-#            {% endif %} 
 
 
+#################################
+## MQTT Car Presence ############
+#################################
 
-
- ## Hoover ###########
- #################################
- 
-  - alias: "Jisiwei Hoover: Automatically switch to off"
+  - alias: OpenGateAdam_ComingHome
     trigger:
       platform: state
-      entity_id: switch.robot_hoover_jisiwei
+      entity_id: switch.adam_car
       to: 'on'
+      from: 'off'
+    condition:
+    - condition: state
+      entity_id: binary_sensor.carpresence1
+      state: 'off'
+      for: 
+        minutes: 10 
     action:
-      service: switch.turn_off
-      entity_id: switch.robot_hoover_jisiwei
+    - service: homeassistant.turn_on
+      entity_id: script.gate_open
 
-  - alias: "ILife Hoover: Automatically switch to off"
+# car sensor is connected and the garage door is closed
+  - alias: CarPresence_ON
     trigger:
       platform: state
-      entity_id: switch.robot_hoover_ilife
+      entity_id: binary_sensor.carpresence1
       to: 'on'
+      from: 'off'
+    condition:
+    - condition: state
+      entity_id: switch.adam_car
+      state: 'off'
     action:
-      service: switch.turn_off
-      entity_id: switch.robot_hoover_ilife
+    - service: homeassistant.turn_on
+      entity_id: script.gate_open
 
-  - alias: 'Roborock ON'
+
+  - alias: Adam Car Off
     trigger:
       platform: event
       event_type: call_service
       event_data:
         service_data:
-          entity_id: switch.roborock
+          entity_id: switch.adam_car
         service: turn_on
     action:
-      service: homeassistant.turn_on
-      entity_id: script.roborock_on
-
-  - alias: 'Roborock Return'
-    trigger:
-      platform: event
-      event_type: call_service
-      event_data:
-        service_data:
-          entity_id: switch.roborock
-        service: turn_off
-    action:
-      service: homeassistant.turn_on
-      entity_id: script.roborock_off
+      service: switch.turn_off
+      entity_id: switch.adam_car

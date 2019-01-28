@@ -11,8 +11,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: 53.3472
-  longitude: -6.2439
+  latitude: 53.418050
+  longitude: -6.736952
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 0
   # metric for Metric, imperial for Imperial
@@ -72,9 +72,53 @@ homeassistant:
 # Enables the frontend
 frontend:
 
+lovelace:
+  mode: yaml
+
 # Enables configuration UI
 config:
 
+# Home Assistnat Cloud
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - switch.kitchen_lamp
+        - switch.living_room_lamp
+        - switch.snug_lamp
+        - switch.porch_lamp
+        - switch.hot_water
+        - switch.outside_lights_back
+        - switch.outside_lights_front
+        - switch.house_gate
+        - switch.garage_door
+#        - switch.adam_car
+        
+#      include_domains:
+#        - switch
+#      exclude_entities:
+#        - switch.outside
+#    entity_config:
+#      switch.kitchen:
+#        name: Custom Name for Google Assistant
+#        aliases:
+#         - bright lights
+#         - entry lights
+#        room: living room
+  alexa:
+    filter:
+      include_entities:
+        - switch.kitchen_lamp
+        - switch.living_room_lamp
+        - switch.snug_lamp
+        - switch.porch_lamp
+        - switch.hot_water
+        - switch.outside_lights_back
+        - switch.outside_lights_front
+        - switch.house_gate
+        - switch.garage_door
+
+  
 http:
   # Uncomment this to add a password (recommended!)
   api_password: !secret api_password
@@ -113,16 +157,11 @@ device_tracker:
     exclude:
      - 192.168.1.1
     
+#map:
 
-
-#vacuum:
-#  - platform: xiaomi_miio
-#    host: 192.168.1.115
-#    token: 49507a4e70504539525953676e333936
-
-zwave:
-   usb_path: /dev/ttyACM0
-   config_path: /srv/homeassistant/lib/python3.6/site-packages/python_openzwave/ozw_config
+#zwave:
+#   usb_path: /dev/ttyACM0
+#   config_path: /srv/homeassistant/lib/python3.6/site-packages/python_openzwave/ozw_config
 
 weather: 
   - platform: darksky
@@ -130,6 +169,8 @@ weather:
 #  - platform: yweather
 
 mqtt:
+  discovery: true
+  discovery_prefix: homeassistant
   broker: 192.168.1.99
   port: 1883
   client_id: home-assistant-1
@@ -152,13 +193,15 @@ sun:
 sensor:
   platform: yr
 
-# Text to speech
-#tts:
-#  platform: google
 
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
+zone: !include zones.yaml
+
+#group: !include_dir_list groups/
+#automation: !include_dir_list automations/
+#script: !include_dir_list scripts/
 
 media_player:
 #  - platform: cast
@@ -176,9 +219,9 @@ media_player:
     client_remove_interval: 600
 
 # Amazon Echo example configuration.yaml entry 
-emulated_hue:
-  host_ip: 192.168.1.99
-  listen_port: 80
+#emulated_hue:
+#  host_ip: 192.168.1.99
+#  listen_port: 80
 
 camera:
   - platform: generic
@@ -196,19 +239,6 @@ notify:
     platform: twilio_call
     from_number: +353876667708
 
-#input_slider:
-#  hot_water_pump_time:
-#    name: Hot Water Pump Time
-#    initial: 15
-#    min: 1
-#    max: 30
-#    step: 1
-#  kitchen_lamp_run_time:
-#    name: Kitchen Lamp Run Time
-#    initial: 10
-#    min: 1
-#    max: 60
-#    step: 1
 
  
 #switch livingroom_rm_mini:
@@ -236,14 +266,10 @@ switch kitchen_rm_mini:
         friendly_name: "Mute Snug TV"
         command_on: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
         command_off: "JgBIAAABJJITEhMSEjcSExISExISExISEzcSNxITEjcSNxM3EjcSNxM3EhITEhI3ExISExISExISExI3EjcTEhI3EzYTNxI3EgANBQ=="
-      robot_hoover_jisiwei:
-        friendly_name: "Kitchen Hoover"
-        command_on: 'JgCQAAABKpQTEhITExMTEhQRExMSORITEjkTOBM4FDcVNhI5ExITORI5ExISExIUExITEhMTEzgSExM4EjkUNxI5EzgTOBQSEgAFGwABKpQTExMSEhMTExITEhQROhITFTYTOBI5FDgYMxM4EhMSORM4ExMSExMSExMTEhITEjoSFBE5EjcVOBI5EjkSORQREgANBQAAAAAAAAAA=='
-        command_off: ''
-      robot_hoover_ilife:
-        friendly_name: "Kitchen Igor"
-        command_on: 'JgBIAAABJ5EVEBETFRETEhAUEBQROBQSEzUUERE4ExIUNRQSETYTEhQRExITNhQQFRESEhM2ExEVNRE4ExISNxQ1ETkUEBQ1EwANBQ=='
-        command_off: ''
+#      robot_hoover_ilife:
+#        friendly_name: "Kitchen Igor"
+#        command_on: 'JgBIAAABJ5EVEBETFRETEhAUEBQROBQSEzUUERE4ExIUNRQSETYTEhQRExITNhQQFRESEhM2ExEVNRE4ExISNxQ1ETkUEBQ1EwANBQ=='
+#        command_off: ''
 
 switch 1:
   platform: broadlink
@@ -273,12 +299,12 @@ switch 1:
       command_off: 'siMyAAURDwcEEgSiBREEEQURBREEEg8HDgcEEQURDwcEEQ8HDwcPBwQRBREPBw8HBREFEQURAAAAAAAA'
     outside_lights_back:  # RF Switch one
       friendly_name: "Garden Lights"
-      command_on: 'sgw0ACQNDSQkDSQNJA0kDSQNDSQkDQ0kDSQkDQ0kDSQkDSQNDSQNJA0kJA0NJA0kJA0kDQwAAW8AAAAA'
-      command_off: 'sgw0ACQNDSQkDSQNJA0kDSQNDSQkDQ0kDSQkDQ0kDSQkDSQNDSQNJA0kJA0NJA0kJA0kDQwAAW8AAAAA'
-    outside_lights_front:  # RF Switch two
-      friendly_name: "Driveway Lights"
       command_on: 'sgw0AA0kJA0kDSQNJA0NJA0kJA0kDSQNDSQkDSQNDSQNJCQNJA0NJCQNDSQNJCQNJA0kDQwAAW8AAAAA'
       command_off: 'sgw0AA0kJA0kDSQNJA0NJA0kJA0kDSQNDSQkDSQNDSQNJCQNJA0NJCQNDSQNJCQNJA0kDQwAAW8AAAAA'
+    outside_lights_front:  # RF Switch two
+      friendly_name: "Driveway Lights"
+      command_on: 'sgw0AA0kJA0NJCQNJA0kDSQNJA0NJCQNJA0NJCQNDSQNJA0kJA0NJCQNDSQNJA0kDSQkDQwAAW8AAAAA'
+      command_off: 'sgw0AA0kJA0NJCQNJA0kDSQNJA0NJCQNJA0NJCQNDSQNJA0kJA0NJCQNDSQNJA0kDSQkDQwAAW8AAAAA'
 
 
 ##### CHRISTMAS ####
@@ -337,8 +363,8 @@ switch 2:
       friendly_name: 'All Lamps'
 #      command_on: script.living_room_sky
 #      command_off: script.living_room_tv_off  
-    darkness:
-      friendly_name: 'Darkness'
+#    darkness:
+#      friendly_name: 'Darkness'
 ## -- SNUG TV -- ##
     snug_tv_on_off:
       friendly_name: 'Snug TV'
@@ -353,15 +379,31 @@ switch 2:
       command_on: ssh pi@192.168.1.99 'sudo /home/homeassistant/.homeassistant/IPChecker.sh'
     house_gate:
       friendly_name: 'Gate'
+    cornagher_gate:
+      friendly_name: 'Cornagher Gate'
+#    adam_car:
+#      friendly_name: 'Adam Car'
 
-binary_sensor:
-  platform: template
-  sensors:
-    garage_door:
-      friendly_name: "Garage Door"
-      device_class: garage_door
-      value_template: "{{ is_state('binary_sensor.neo_coolcam_doorwindow_detector_sensor', 'on') }}"
+#binary_sensor:
+#  platform: template
+#  sensors:
+#    garage_door:
+#      friendly_name: "Garage Door"
+#      device_class: garage_door
+#      value_template: "{{ is_state('binary_sensor.neo_coolcam_doorwindow_detector_sensor', 'on') }}"
 
+
+weblink:
+  entities:
+    - name: Plex
+      url: http://192.168.1.99:32400
+      icon: mdi:plex
+    - name: Sonarr
+      url: http://192.168.1.99:8989
+      icon: mdi:television-box
+    - name: Radarr
+      url: http://192.168.1.99:7878
+      icon: mdi:movie
 
 
 
@@ -394,14 +436,24 @@ binary_sensor:
 #        service: script.living_room_tv_on_off
 
 
-weblink:
-  entities:
-    - name: Plex
-      url: http://192.168.1.99:32400
-      icon: mdi:plex
-    - name: Sonarr
-      url: http://192.168.1.99:8989
-      icon: mdi:television-box
-    - name: Radarr
-      url: http://192.168.1.99:7878
-      icon: mdi:movie
+#vacuum:
+#  - platform: xiaomi_miio
+#    host: 192.168.1.115
+#    token: 49507a4e70504539525953676e333936
+# Text to speech
+#tts:
+#  platform: google
+
+#input_slider:
+#  hot_water_pump_time:
+#    name: Hot Water Pump Time
+#    initial: 15
+#    min: 1
+#    max: 30
+#    step: 1
+#  kitchen_lamp_run_time:
+#    name: Kitchen Lamp Run Time
+#    initial: 10
+#    min: 1
+#    max: 60
+#    step: 1

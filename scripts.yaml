@@ -1,11 +1,4 @@
 
-#  kitchen_lamp_timer:
-#    alias: "Kitchen Lamp Timer"
-#    sequence:
-#      - delay: '00:00:{{ states.input_slider.kitchen_lamp_run_time.state | int }}'
-#      - service: homeassistant.turn_off
-#        data:
-#          entity_id: switch.kitchen_lamp
   
   hot_water_pump_timer:
     alias: "Hot Water Pump Timer"
@@ -15,76 +8,6 @@
         data:
           entity_id: switch.hot_water
 
-  gate_off_auto:
-    alias: "House Gate Off Auto"
-    sequence:
-      - delay: '00:00:03'
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.house_gate
-
-  flash_kitchen_lamp_on:
-    alias: "Flash Kitchen Lamp On"
-    sequence:
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-
-  flash_kitchen_lamp_off:
-    alias: "Flash Kitchen Lamp Off"
-    sequence:
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.kitchen_lamp
-      - delay: '00:00:01'
-
-#  all_lamps_off:
-#    alias: "Turn off all lamps"
-#    sequence:
-#      -  service homeassistant.turn_off
-#         data:
-#           - entity_id: group.lights
 
   hot_water_on:
     alias: "Hot Water On"
@@ -312,3 +235,34 @@
 #    alias: "Roborock Off"
 #    sequence:
 #      - service: vacuum.return_to_base
+
+
+################
+### Gates ######
+################
+
+  gate_house_open:
+    alias: Open House Gate
+    sequence: 
+      - service: notify.adam_phone
+        data: 
+          message: ''
+          target: 
+            - '+353894205689' 
+      - delay: '00:00:03'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.house_gate
+
+  gate_cornagher_open:
+    alias: Open Cornagher Gate
+    sequence: 
+      - service: notify.adam_phone
+        data:
+          message: ''
+          target: 
+            - '+353877054983'
+      - delay: '00:00:03'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.cornagher_gate

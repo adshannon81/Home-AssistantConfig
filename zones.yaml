@@ -1,0 +1,25 @@
+
+- name: Home
+  latitude: 53.418050
+  longitude: -6.736952
+  radius: 500
+  icon: mdi:home
+
+#- name: OutsideGate1
+#  latitude: 53.419227
+#  longitude: -6.736952
+#  radius: 100
+#  icon: mdi:car-side
+
+#- name: OutsideGate2
+#  latitude: 53.417436
+#  longitude: -6.740986
+#  radius: 200
+#  icon: mdi:car-side
+
+- name: Cornagher
+  latitude: 53.422782
+  longitude: -6.733047
+  radius: 350
+  icon: mdi:home
+

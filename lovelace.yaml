@@ -60,8 +60,8 @@ views:
           show_state: false
           entities:
             - entity: switch.hot_water
-              tap_action: 
-                action: toggle
+#              tap_action: 
+#                action: toggle
 
         - type: glance
           title: Outside
@@ -75,7 +75,7 @@ views:
               tap_action: 
                 action: toggle
             - entity: switch.house_gate
-              tap_action:  
+              tap_action: 
                 action: toggle
             - entity: switch.garage_door
               tap_action: 
