@@ -165,7 +165,7 @@ device_tracker:
 
 weather: 
   - platform: darksky
-    api_key: 980116f7cdf95517d08de54a87b1b02b
+    api_key:!secret darksky_api
 #  - platform: yweather
 
 mqtt:
@@ -228,8 +228,8 @@ camera:
     still_image_url: http://192.168.1.50/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand=0.7046812061041008
 
 twilio:
-  account_sid: AC31e9872897c0373284015f78156b1437
-  auth_token: 0f5c4a33e4d03985d273364c354e3e42
+  account_sid: !secret twilio_sid
+  auth_token: !secret twilio_auth
 
 notify:
   - name: Adam
